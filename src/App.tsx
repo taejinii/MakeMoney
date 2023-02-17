@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+interface CurrencyTypes {
+  currencyCode: string;
+  cashBuyingPrice: number;
+}
 
 function App() {
+  const currencyName = ["EUR", "USD", "GBP", "JPY"];
+  const [currency, setCurrency] = useState<any>([]);
+  const exchangeRate = async () => {
+    let currencyArr = [];
+    for (let i = 0; i < currencyName.length; i++) {
+      const response = await axios.get(
+        `https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW${currencyName[i]}`
+      );
+      currencyArr.push(response.data[0]);
+    }
+    return setCurrency(currencyArr);
+  };
+
+  useEffect(() => {
+    exchangeRate();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {currency &&
+        currency?.map((el: CurrencyTypes, idx: number) => {
+          return (
+            <div key={idx}>
+              {el.currencyCode}:{el.cashBuyingPrice}
+            </div>
+          );
+        })}
     </div>
   );
 }
