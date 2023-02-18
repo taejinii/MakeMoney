@@ -1,40 +1,21 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-
-interface CurrencyTypes {
-  currencyCode: string;
-  cashBuyingPrice: number;
-}
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import MainPage from "./pages/MainPage";
+import InventoryPage from "./pages/InventoryPage";
+import DashboardPage from "./pages/DashboardPage";
+import StockxPage from "./pages/StockxPage";
 function App() {
-  const currencyName = ["EUR", "USD", "GBP", "JPY"];
-  const [currency, setCurrency] = useState<any>([]);
-  const exchangeRate = async () => {
-    let currencyArr = [];
-    for (let i = 0; i < currencyName.length; i++) {
-      const response = await axios.get(
-        `https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW${currencyName[i]}`
-      );
-      currencyArr.push(response.data[0]);
-    }
-    return setCurrency(currencyArr);
-  };
-
-  useEffect(() => {
-    exchangeRate();
-  }, []);
-
   return (
-    <div className="App">
-      {currency &&
-        currency?.map((el: CurrencyTypes, idx: number) => {
-          return (
-            <div key={idx}>
-              {el.currencyCode}:{el.cashBuyingPrice}
-            </div>
-          );
-        })}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="home" element={<MainPage />} />
+          <Route path="inventory" element={<InventoryPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="stockx" element={<StockxPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
