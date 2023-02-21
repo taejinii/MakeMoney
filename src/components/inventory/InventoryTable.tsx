@@ -1,32 +1,18 @@
-import { useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTable } from "react-table";
 import axios from "axios";
+
 export default function InventoryTable() {
+  const [items, setItmes] = useState();
   const getData = async () => {
     const response = await axios.get("http://localhost:3001/items");
-    console.log(response);
+    setItmes(response.data);
   };
   useEffect(() => {
     getData();
   }, []);
-  const data = useMemo(
-    () => [
-      {
-        buyDate: "21-02-25",
-        buyPlace: "World",
-        productName: "Hello",
-        quantity: 5,
-        price: 80,
-        krwPrice: "522,676",
-        shipExpense: "40,000",
-        customsDuty: "World",
-        totalPrice: "197,651,810,981",
-        sellPrice: 1 + 1 + 2 + 5,
-        netProfit: "World",
-      },
-    ],
-    []
-  );
+
+  const data = useMemo(() => items, [items]) || [];
 
   const columns = useMemo(
     () => [
