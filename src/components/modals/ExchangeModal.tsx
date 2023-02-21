@@ -23,6 +23,7 @@ export default function ExchangeModal() {
   useEffect(() => {
     exchangeRate();
   }, []);
+
   return (
     <div>
       {currency &&
