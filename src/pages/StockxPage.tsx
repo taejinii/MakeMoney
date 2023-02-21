@@ -1,3 +1,5 @@
+import { Container } from "./InventoryPage";
+
 export default function StockxPage() {
-  return <h1>StockxPage</h1>;
+  return <Container>StockxPage</Container>;
 }
