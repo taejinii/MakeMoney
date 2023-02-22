@@ -1,12 +1,21 @@
 import styled from "styled-components";
-import ModalBack from "./ModalBack";
+import useModalClose from "../../hooks/useModalClose";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
+
 interface VisibleType {
   visible: boolean;
 }
 
-const ModalContainer = styled.div<VisibleType>`
+export const ModalBackDrop = styled.div`
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+`;
+
+export const ModalContainer = styled.div<VisibleType>`
   position: fixed;
   display: ${(props) => (props.visible ? "block" : "none")};
   flex-direction: column;
@@ -21,13 +30,15 @@ const ModalContainer = styled.div<VisibleType>`
   border-radius: 10px;
   z-index: 20;
 `;
+
 export default function AddItemModal() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.modal);
+  const ref = useModalClose(isOpen, closeModal());
   console.log(isOpen);
   return (
     <>
-      {isOpen && <ModalBack />}
+      {isOpen && <ModalBackDrop ref={ref} />}
       <ModalContainer visible={isOpen}>
         <button onClick={() => dispatch(closeModal())}>x</button>
       </ModalContainer>
