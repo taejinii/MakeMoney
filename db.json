@@ -15,6 +15,7 @@
       "netProfit": "World"
     },
     {
+      "id": 2,
       "buyDate": "21-02-26",
       "buyPlace": "World",
       "productName": "Hello",
@@ -25,8 +26,7 @@
       "customsDuty": "World",
       "totalPrice": "9999999999",
       "sellPrice": 98132464,
-      "netProfit": "World",
-      "id": 2
+      "netProfit": "World"
     }
   ],
   "comments": [
