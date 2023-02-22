@@ -74,10 +74,13 @@ export default function InventoryTable() {
       data,
     });
   return (
-    <table {...getTableProps()}>
+    <table {...getTableProps()} className="">
       <thead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr
+            {...headerGroup.getHeaderGroupProps()}
+            className="whitespace-nowrap"
+          >
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} className="text-start">
                 {column.render("Header")}
@@ -90,10 +93,10 @@ export default function InventoryTable() {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} className="whitespace-nowrap">
               {row.cells.map((cell) => {
                 return (
-                  <td {...cell.getCellProps()} className="text-start">
+                  <td {...cell.getCellProps()} className="text-start ">
                     {cell.render("Cell")}
                   </td>
                 );
