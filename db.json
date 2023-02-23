@@ -15,7 +15,6 @@
       "netProfit": "World"
     },
     {
-      "id": 2,
       "buyDate": "21-02-26",
       "buyPlace": "World",
       "productName": "Hello",
@@ -26,7 +25,35 @@
       "customsDuty": "World",
       "totalPrice": "9999999999",
       "sellPrice": 98132464,
-      "netProfit": "World"
+      "netProfit": "World",
+      "id": 2
+    },
+    {
+      "buyDate": "",
+      "buyPlace": "",
+      "size": "",
+      "productName": "",
+      "quantity": "",
+      "price": "",
+      "id": 3
+    },
+    {
+      "buyDate": "23-02-01",
+      "buyPlace": "kith",
+      "size": "265",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": "5",
+      "price": "120",
+      "id": 4
+    },
+    {
+      "buyDate": "23-02-01",
+      "buyPlace": "kith",
+      "size": "265",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": "5",
+      "price": "120",
+      "id": 5
     }
   ],
   "comments": [

@@ -10,7 +10,7 @@ export default function InventoryTable() {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [items]);
 
   const data = useMemo(() => items, [items]) || [];
 
