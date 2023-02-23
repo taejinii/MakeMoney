@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-interface IItemsType {
+import { getItem } from "../../utils/api";
+interface ItemsType {
+  id: number;
   buyDate: string;
   buyPlace: string;
   productName: string;
@@ -16,15 +17,24 @@ interface IItemsType {
 }
 
 export default function InventoryTable() {
-  const [items, setItmes] = useState<Array<IItemsType>>([]);
-  const getData = async () => {
-    const response = await axios.get("http://localhost:3001/items");
-    setItmes(response.data);
-  };
+  const [items, setItmes] = useState<ItemsType[]>([]);
+  // const getItems = async () => {
+  //   const response = await axios.get("http://localhost:3001/items");
+  //   setItmes(response.data);
+  // };
   useEffect(() => {
-    getData();
+    getItem().then((res) => setItmes(res));
   }, []);
+
+  const deleteItem = (id: number) => {
+    axios
+      .delete(`http://localhost:3001/items/${id}`)
+      .then(() => getItem().then((res) => setItmes(res)))
+      .catch((err) => console.log(err));
+  };
+
   const tableHeader: string[] = [
+    "",
     "구매일",
     "구매처",
     "제품명",
@@ -37,7 +47,6 @@ export default function InventoryTable() {
     "판매가격",
     "순이익",
   ];
-  console.log(Number("2"));
   return (
     <table>
       <thead>
@@ -48,26 +57,30 @@ export default function InventoryTable() {
         </tr>
       </thead>
       <tbody>
-        {items.map((item, index) => {
+        {items.map((item) => {
+          const krwPrice = item.quantity * (item.price * 1317);
+          const duty = krwPrice * 0.25;
+          const totalPrice = krwPrice + duty + item.shipExpense;
           return (
-            <tr className="text-center whitespace-nowrap" key={index}>
+            <tr
+              className="text-center whitespace-nowrap border-b-2 "
+              key={item.id}
+            >
+              <td>{item.id}</td>
               <td>{item.buyDate}</td>
               <td>{item.buyPlace}</td>
               <td>{item.productName}</td>
               <td>{item.quantity}</td>
               <td>{item.price}</td>
-              <td>{item.price * 1317}</td>
+              <td>{krwPrice}</td>
               <td>{item.shipExpense}</td>
-              <td>{item.price * 1317 * 0.25}</td>
-              <td>
-                {item.price * 1317 +
-                  item.shipExpense +
-                  item.price * 1317 * 0.25}
-              </td>
+              <td>{duty}</td>
+              <td>{totalPrice}</td>
               <td>{item.sellPrice}</td>
+              <td>{item.sellPrice - totalPrice}</td>
               <td>
-                {item.sellPrice -
-                  (item.price * 1317 + item.shipExpense + item.customsDuty)}
+                <button>수정</button>
+                <button onClick={() => deleteItem(item.id)}>삭제</button>
               </td>
             </tr>
           );

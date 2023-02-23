@@ -17,6 +17,7 @@ interface IFormInput {
   price: number;
   size: string | number;
   shipExpense: number;
+  sellPrice: number;
 }
 
 export const ModalBackDrop = styled.div`
@@ -67,7 +68,7 @@ export default function AddItemModal() {
             <h2 className="text-xl font-semibold">Add Item</h2>
             <button onClick={() => dispatch(closeModal())}>x</button>
           </header>
-          <section className="flex flex-col gap-2 mt-2">
+          <section className="flex flex-col gap-1 mt-2">
             <span>구매일</span>
             <input className="border-2" {...register("buyDate")} />
             <span>구매처</span>
@@ -94,6 +95,13 @@ export default function AddItemModal() {
             <input
               className="border-2"
               {...register("shipExpense", {
+                valueAsNumber: true,
+              })}
+            />
+            <span>판매 가격</span>
+            <input
+              className="border-2"
+              {...register("sellPrice", {
                 valueAsNumber: true,
               })}
             />
