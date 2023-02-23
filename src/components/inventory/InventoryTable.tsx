@@ -1,106 +1,74 @@
-import { useState, useMemo, useEffect } from "react";
-import { useTable } from "react-table";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
+interface IItemsType {
+  buyDate: string;
+  buyPlace: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  krwPrice: number;
+  shipExpense: number;
+  customsDuty: number;
+  totalPrice: number;
+  sellPrice: number;
+  netProfit: number;
+}
+
 export default function InventoryTable() {
-  const [items, setItmes] = useState();
+  const [items, setItmes] = useState<Array<IItemsType>>([]);
   const getData = async () => {
     const response = await axios.get("http://localhost:3001/items");
     setItmes(response.data);
   };
   useEffect(() => {
     getData();
-  }, [items]);
-
-  const data = useMemo(() => items, [items]) || [];
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "구매일",
-        accessor: "buyDate", // accessor is the "key" in the data
-      },
-      {
-        Header: "구매처",
-        accessor: "buyPlace",
-      },
-      {
-        Header: "사이즈",
-        accessor: "size",
-      },
-      {
-        Header: "제품명",
-        accessor: "productName",
-      },
-      {
-        Header: "수량",
-        accessor: "quantity",
-      },
-      {
-        Header: "구매금액",
-        accessor: "price",
-      },
-      {
-        Header: "원화구매금액",
-        accessor: "krwPrice",
-      },
-      {
-        Header: "배대지 비용",
-        accessor: "shipExpense",
-      },
-      {
-        Header: "관부가세",
-        accessor: "customsDuty",
-      },
-      {
-        Header: "총구매금액",
-        accessor: "totalPrice",
-      },
-      {
-        Header: "판매금액",
-        accessor: "sellPrice",
-      },
-      {
-        Header: "순이익",
-        accessor: "netProfit",
-      },
-    ],
-    []
-  );
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      //@ts-ignore
-      columns,
-      data,
-    });
+  }, []);
+  const tableHeader: string[] = [
+    "구매일",
+    "구매처",
+    "제품명",
+    "수량",
+    "구매가격($USD)",
+    "원화구매가격",
+    "배대지비용",
+    "관부가세",
+    "총 구입가격",
+    "판매가격",
+    "순이익",
+  ];
+  console.log(Number("2"));
   return (
-    <table {...getTableProps()} className="">
+    <table>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr
-            {...headerGroup.getHeaderGroupProps()}
-            className="whitespace-nowrap"
-          >
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} className="text-start">
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
+        <tr className="whitespace-nowrap">
+          {tableHeader.map((header, index) => {
+            return <th key={index}>{header}</th>;
+          })}
+        </tr>
       </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
+      <tbody>
+        {items.map((item, index) => {
           return (
-            <tr {...row.getRowProps()} className="whitespace-nowrap">
-              {row.cells.map((cell) => {
-                return (
-                  <td {...cell.getCellProps()} className="text-start ">
-                    {cell.render("Cell")}
-                  </td>
-                );
-              })}
+            <tr className="text-center whitespace-nowrap" key={index}>
+              <td>{item.buyDate}</td>
+              <td>{item.buyPlace}</td>
+              <td>{item.productName}</td>
+              <td>{item.quantity}</td>
+              <td>{item.price}</td>
+              <td>{item.price * 1317}</td>
+              <td>{item.shipExpense}</td>
+              <td>{item.price * 1317 * 0.25}</td>
+              <td>
+                {item.price * 1317 +
+                  item.shipExpense +
+                  item.price * 1317 * 0.25}
+              </td>
+              <td>{item.sellPrice}</td>
+              <td>
+                {item.sellPrice -
+                  (item.price * 1317 + item.shipExpense + item.customsDuty)}
+              </td>
             </tr>
           );
         })}

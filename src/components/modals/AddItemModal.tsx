@@ -16,6 +16,7 @@ interface IFormInput {
   quantity: number;
   price: number;
   size: string | number;
+  shipExpense: number;
 }
 
 export const ModalBackDrop = styled.div`
@@ -43,10 +44,10 @@ export const ModalContainer = styled.div<VisibleType>`
 `;
 
 export default function AddItemModal() {
-  const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.modal);
-  const ref = useModalClose(isOpen, closeModal());
   const { register, handleSubmit, reset } = useForm<IFormInput>();
+  const dispatch = useAppDispatch();
+  const ref = useModalClose(isOpen, closeModal());
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (data) {
@@ -76,9 +77,26 @@ export default function AddItemModal() {
             <span>제품명</span>
             <input className="border-2" {...register("productName")} />
             <span>수량</span>
-            <input className="border-2" {...register("quantity")} />
+            <input
+              className="border-2"
+              {...register("quantity", {
+                valueAsNumber: true,
+              })}
+            />
             <span>구매금액</span>
-            <input className="border-2" {...register("price")} />
+            <input
+              className="border-2"
+              {...register("price", {
+                valueAsNumber: true,
+              })}
+            />
+            <span>배대지 비용</span>
+            <input
+              className="border-2"
+              {...register("shipExpense", {
+                valueAsNumber: true,
+              })}
+            />
           </section>
           <footer className="flex justify-center items-start">
             <button>Add Item</button>
