@@ -10,7 +10,7 @@ assignees: ''
 **Description**
 
 **TODO**
-- [ ]
-- [ ]
+- [ ] todo 
+- [ ] todo 
+
 **기타사항**
-Add any other context or screenshots about the feature request here.
