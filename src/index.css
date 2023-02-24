@@ -18,3 +18,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+@layer components {
+  .sidebar-btn {
+    @apply flex justify-center items-center p-2 w-full hover:bg-slate-300;
+  }
+}

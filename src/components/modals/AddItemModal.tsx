@@ -4,7 +4,6 @@ import useModalClose from "../../hooks/useModalClose";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
-
 interface VisibleType {
   visible: boolean;
 }
@@ -55,6 +54,7 @@ export default function AddItemModal() {
       axios.post("http://localhost:3001/items", data);
       dispatch(closeModal());
       reset();
+      window.location.reload();
     }
     return;
   };

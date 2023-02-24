@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 export default function InventoryHeader() {

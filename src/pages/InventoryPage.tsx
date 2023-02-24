@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
