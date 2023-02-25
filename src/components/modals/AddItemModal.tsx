@@ -51,7 +51,7 @@ export default function AddItemModal() {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (data) {
-      axios.post("http://localhost:3001/items", data);
+      axios.post("http://localhost:3001/items", { ...data, isSoldOut: false });
       dispatch(closeModal());
       reset();
       window.location.reload();
@@ -64,43 +64,76 @@ export default function AddItemModal() {
       {isOpen && <ModalBackDrop ref={ref} />}
       <ModalContainer visible={isOpen}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <header className="flex justify-between items-center border-b-2 p-4">
+          <header className="flex justify-between items-center border-b-2 p-2">
             <h2 className="text-xl font-semibold">Add Item</h2>
             <button onClick={() => dispatch(closeModal())}>x</button>
           </header>
-          <section className="flex flex-col gap-1 mt-2">
-            <span>구매일</span>
-            <input className="border-2" {...register("buyDate")} />
-            <span>구매처</span>
-            <input className="border-2" {...register("buyPlace")} />
-            <span>사이즈</span>
-            <input className="border-2" {...register("size")} />
+          <section className="flex flex-col gap-1 p-2 ">
+            <div className="flex items-center justify-center">
+              <div>
+                <span>구매일</span>
+                <input
+                  className="border-2 rounded-md  p-2"
+                  type={"date"}
+                  required
+                  {...register("buyDate")}
+                />
+              </div>
+              <div>
+                <span>구매처</span>
+                <input
+                  className="border-2 rounded-md py-2 w-full"
+                  required
+                  {...register("buyPlace")}
+                />
+              </div>
+            </div>
             <span>제품명</span>
-            <input className="border-2" {...register("productName")} />
-            <span>수량</span>
             <input
-              className="border-2"
-              {...register("quantity", {
-                valueAsNumber: true,
-              })}
+              className="border-2 rounded-md py-2"
+              required
+              {...register("productName")}
             />
+            <div className="flex ">
+              <div>
+                <span>사이즈</span>
+                <input
+                  className="border-2 rounded-md py-2"
+                  required
+                  {...register("size")}
+                />
+              </div>
+              <div>
+                <span>수량</span>
+                <input
+                  className="border-2 rounded-md w-full py-2"
+                  required
+                  {...register("quantity", {
+                    valueAsNumber: true,
+                  })}
+                />
+              </div>
+            </div>
             <span>구매금액</span>
             <input
-              className="border-2"
+              className="border-2 rounded-md py-2"
+              required
               {...register("price", {
                 valueAsNumber: true,
               })}
             />
             <span>배대지 비용</span>
             <input
-              className="border-2"
+              className="border-2 rounded-md py-2"
+              defaultValue={0}
               {...register("shipExpense", {
                 valueAsNumber: true,
               })}
             />
             <span>판매 가격</span>
             <input
-              className="border-2"
+              className="border-2 rounded-md py-2"
+              defaultValue={0}
               {...register("sellPrice", {
                 valueAsNumber: true,
               })}

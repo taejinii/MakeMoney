@@ -9,7 +9,8 @@
       "price": 270,
       "shipExpense": 0,
       "sellPrice": 1200000,
-      "id": 1
+      "id": 1,
+      "isSoldOut": true
     },
     {
       "buyDate": "23-02-24",
@@ -20,7 +21,8 @@
       "price": 200,
       "shipExpense": 25000,
       "sellPrice": 50000,
-      "id": 2
+      "id": 2,
+      "isSoldOut": false
     },
     {
       "buyDate": "23-02-24",
@@ -31,7 +33,8 @@
       "price": 270,
       "shipExpense": 0,
       "sellPrice": 0,
-      "id": 3
+      "id": 3,
+      "isSoldOut": false
     },
     {
       "buyDate": "23-02-01",
@@ -42,7 +45,8 @@
       "price": 120,
       "shipExpense": 25000,
       "sellPrice": 0,
-      "id": 5
+      "id": 5,
+      "isSoldOut": false
     },
     {
       "buyDate": "23-02-01",
@@ -53,7 +57,81 @@
       "price": 120,
       "shipExpense": 25000,
       "sellPrice": 0,
-      "id": 6
+      "id": 16,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "23-02-01",
+      "buyPlace": "kith",
+      "size": "265",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": 2,
+      "price": 120,
+      "shipExpense": 25000,
+      "sellPrice": 0,
+      "id": 26,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "23-02-01",
+      "buyPlace": "kith",
+      "size": "265",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": 2,
+      "price": 120,
+      "shipExpense": 25000,
+      "sellPrice": 0,
+      "id": 36,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "2023-02-25",
+      "buyPlace": "Stussy EU",
+      "size": "XL",
+      "productName": "STÜSSY & LEVI'S EMBOSSED TRUCKER JACKET",
+      "quantity": 1,
+      "price": 120,
+      "shipExpense": 0,
+      "sellPrice": 0,
+      "id": 37,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "2023-02-08",
+      "buyPlace": "Stussy EU",
+      "size": "XL",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 0,
+      "sellPrice": 0,
+      "id": 38,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "2023-02-15",
+      "buyPlace": "kith",
+      "size": "265",
+      "productName": "Adidas YeezyBoost 350",
+      "quantity": 5,
+      "price": 200,
+      "shipExpense": 0,
+      "sellPrice": 0,
+      "id": 39,
+      "isSoldOut": false
+    },
+    {
+      "buyDate": "2023-02-14",
+      "buyPlace": "kith",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 5,
+      "price": 120,
+      "shipExpense": 0,
+      "sellPrice": 0,
+      "isSoldOUt": false,
+      "id": 40,
+      "isSoldOut": false
     }
   ],
   "profile": {

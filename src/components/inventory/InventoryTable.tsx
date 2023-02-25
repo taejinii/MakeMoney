@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getItem, deleteItem } from "../../utils/api";
+import axios from "axios";
 interface ItemsType {
   id: number;
   buyDate: string;
@@ -13,32 +14,33 @@ interface ItemsType {
   totalPrice: number;
   sellPrice: number;
   netProfit: number;
+  isSoldOut: boolean;
 }
-// const td = styled.td`
-//   padding: 4px;
-//   color: #4b76f9;
-//   font-weight: 500;
-// `;
 
 export default function InventoryTable() {
   const [items, setItmes] = useState<ItemsType[]>([]);
-
+  const [isSoldOut, setIsSoldOut] = useState(false);
   useEffect(() => {
     getItem().then((res) => setItmes(res));
-  }, []);
+  }, [isSoldOut]);
 
   const deleteItemHandler = (id: number) => {
     deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
   };
 
+  const handleCheck = (e: boolean, id: number) => {
+    axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: e });
+    setIsSoldOut(!isSoldOut);
+  };
+  console.log(isSoldOut);
   const tableHeader: string[] = [
-    "",
+    "판매여부",
     "구매일",
     "구매처",
     "제품명",
     "수량",
-    "구매가격($USD)",
-    "원화구매가격",
+    "구매가($USD)",
+    "원화 가격",
     "배대지비용",
     "관부가세",
     "총 구입가격",
@@ -48,7 +50,7 @@ export default function InventoryTable() {
   return (
     <table>
       <thead>
-        <tr className="whitespace-nowrap border-b-2">
+        <tr className="whitespace-nowrap border-b-2 sticky -top-8 bg-white">
           {tableHeader.map((header, index) => {
             return (
               <th key={index} className="py-3">
@@ -66,22 +68,32 @@ export default function InventoryTable() {
           const netProfit = item.sellPrice - totalPrice;
           return (
             <tr
-              className="text-center whitespace-nowrap text-blue-600 font-semibold"
+              className="text-center whitespace-nowrap  font-semibold"
               key={item.id}
             >
-              <td className="p-2 ">{item.id}</td>
+              <td className="p-2">
+                <input
+                  type={"checkbox"}
+                  checked={item.isSoldOut}
+                  onChange={(e) => handleCheck(e.target.checked, item.id)}
+                />
+              </td>
               <td>{item.buyDate}</td>
               <td>{item.buyPlace}</td>
-              <td>{item.productName}</td>
+              <td
+                className={item.isSoldOut ? "text-green-600" : "text-blue-600"}
+              >
+                {item.productName}
+              </td>
               <td>{item.quantity}</td>
-              <td>{item.price}</td>
+              <td>${item.price}</td>
               <td>{krwPrice.toLocaleString()}</td>
               <td>{item.shipExpense}</td>
               <td>{duty.toLocaleString()}</td>
-              <td className="text-red-500">-{totalPrice.toLocaleString()}</td>
+              <td className="text-red-600">-{totalPrice.toLocaleString()}</td>
               <td className="text-black">{item.sellPrice.toLocaleString()}</td>
 
-              <td className={netProfit > 0 ? "text-green-600" : "text-red-500"}>
+              <td className={netProfit > 0 ? "text-green-600" : "text-red-600"}>
                 {netProfit.toLocaleString()}
               </td>
 

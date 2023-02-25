@@ -10,6 +10,7 @@ export default function InventoryHeader() {
           <button onClick={() => dispatch(openModal())}>아이템 추가</button>
           <button>엑셀 다운로드</button>
           <button>엑셀 업로드</button>
+          <button>다크모드</button>
         </div>
       </div>
       <p>Manage your inventory of shoes,clothes, and collectibles.</p>
