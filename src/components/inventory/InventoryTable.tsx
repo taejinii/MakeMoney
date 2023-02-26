@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { getItem, deleteItem } from "../../utils/api";
+import { openModal } from "../../store/modalSlice";
+import { useAppDispatch } from "../../store/store";
 import axios from "axios";
 interface ItemsType {
   id: number;
@@ -15,11 +17,14 @@ interface ItemsType {
   sellPrice: number;
   netProfit: number;
   isSoldOut: boolean;
+  size: string;
 }
 
 export default function InventoryTable() {
   const [items, setItmes] = useState<ItemsType[]>([]);
   const [isSoldOut, setIsSoldOut] = useState(false);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     getItem().then((res) => setItmes(res));
   }, [isSoldOut]);
@@ -28,16 +33,16 @@ export default function InventoryTable() {
     deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
   };
 
-  const handleCheck = (e: boolean, id: number) => {
-    axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: e });
+  const handleCheck = (check: boolean, id: number) => {
+    axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: check });
     setIsSoldOut(!isSoldOut);
   };
-  console.log(isSoldOut);
   const tableHeader: string[] = [
     "판매여부",
     "구매일",
     "구매처",
     "제품명",
+    "사이즈",
     "수량",
     "구매가($USD)",
     "원화 가격",
@@ -85,6 +90,7 @@ export default function InventoryTable() {
               >
                 {item.productName}
               </td>
+              <td>{item.size}</td>
               <td>{item.quantity}</td>
               <td>${item.price}</td>
               <td>{krwPrice.toLocaleString()}</td>
@@ -98,7 +104,13 @@ export default function InventoryTable() {
               </td>
 
               <td>
-                <button>수정</button>
+                <button
+                  onClick={() =>
+                    dispatch(openModal({ isEdit: true, itemId: item.id }))
+                  }
+                >
+                  수정
+                </button>
                 <button onClick={() => deleteItemHandler(item.id)}>삭제</button>
               </td>
             </tr>

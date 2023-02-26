@@ -7,7 +7,9 @@ export default function InventoryHeader() {
       <div className="flex justify-between items-center w-full mb-2">
         <h1 className="text-3xl font-semibold">Inventory</h1>
         <div className="flex gap-3">
-          <button onClick={() => dispatch(openModal())}>아이템 추가</button>
+          <button onClick={() => dispatch(openModal(false))}>
+            아이템 추가
+          </button>
           <button>엑셀 다운로드</button>
           <button>엑셀 업로드</button>
           <button>다크모드</button>
