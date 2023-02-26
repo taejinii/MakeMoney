@@ -10,7 +10,7 @@ interface VisibleType {
 }
 
 interface IFormInput {
-  buyDate: string;
+  buyDate: string | Date;
   buyPlace: string;
   productName: string;
   quantity: number;
@@ -60,12 +60,25 @@ export default function ItemEditorModal() {
 
   console.log("isEdit", isEdit);
   useEffect(() => {
-    if (isEdit.itemId === 0 || isEdit.itemId === undefined) {
+    if (isEdit.itemId === 0 || isEdit.itemId === undefined || !isEdit) {
+      reset({
+        productName: "",
+        buyPlace: "",
+        size: "",
+        buyDate: new Date(),
+        price: 0,
+        shipExpense: 0,
+        sellPrice: 0,
+        quantity: 0,
+      });
       return;
     } else {
       getOriginData();
     }
-  }, [getOriginData, isEdit.itemId]);
+  }, [getOriginData, isEdit, isEdit.itemId, reset]);
+  useEffect(() => {
+    resetField("productName");
+  }, [isOpen, resetField]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
