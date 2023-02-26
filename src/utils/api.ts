@@ -14,11 +14,3 @@ export const deleteItem = (id: number) => {
     console.log(err);
   }
 };
-
-// export const editItem = (id) =>{
-//   try{
-//     return axios.put()
-//   }catch(err){
-//     console.log(err)
-//   }
-// }

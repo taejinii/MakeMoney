@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { getItem, deleteItem } from "../../utils/api";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
+import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 import axios from "axios";
+
 interface ItemsType {
   id: number;
   buyDate: string;
@@ -51,6 +53,7 @@ export default function InventoryTable() {
     "총 구입가격",
     "판매가격",
     "순이익",
+    "",
   ];
   return (
     <table>
@@ -73,7 +76,7 @@ export default function InventoryTable() {
           const netProfit = item.sellPrice - totalPrice;
           return (
             <tr
-              className="text-center whitespace-nowrap  font-semibold"
+              className="text-center whitespace-nowrap font-semibold hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.4)]"
               key={item.id}
             >
               <td className="p-2">
@@ -105,13 +108,16 @@ export default function InventoryTable() {
 
               <td>
                 <button
+                  className="mr-1"
                   onClick={() =>
                     dispatch(openModal({ isEdit: true, itemId: item.id }))
                   }
                 >
-                  수정
+                  <AiTwotoneEdit />
                 </button>
-                <button onClick={() => deleteItemHandler(item.id)}>삭제</button>
+                <button onClick={() => deleteItemHandler(item.id)}>
+                  <AiTwotoneDelete />
+                </button>
               </td>
             </tr>
           );
