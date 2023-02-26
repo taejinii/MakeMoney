@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
 import useModalClose from "../../hooks/useModalClose";
+import Button from "../Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useCallback, useEffect } from "react";
+
 interface VisibleType {
   visible: boolean;
 }
@@ -49,7 +51,7 @@ export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen, closeModal());
-  const { register, handleSubmit, reset, resetField } = useForm<IFormInput>();
+  const { register, handleSubmit, reset } = useForm<IFormInput>();
 
   const getOriginData = useCallback(async () => {
     const result = await axios.get(
@@ -76,20 +78,20 @@ export default function ItemEditorModal() {
       getOriginData();
     }
   }, [getOriginData, isEdit, isEdit.itemId, reset]);
-  useEffect(() => {
-    resetField("productName");
-  }, [isOpen, resetField]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
     if (!isEdit) {
-      axios.post("http://localhost:3001/items", { ...data, isSoldOut: false });
+      axios.post("http://localhost:3001/items", {
+        ...data,
+        isSoldOut: false,
+      });
       dispatch(closeModal());
       window.location.reload();
     } else {
       axios.patch(`http://localhost:3001/items/${isEdit.itemId}`, data);
       dispatch(closeModal());
-      // window.location.reload();
+      window.location.reload();
     }
   };
   return (
@@ -97,13 +99,13 @@ export default function ItemEditorModal() {
       {isOpen && <ModalBackDrop ref={ref} />}
       <ModalContainer visible={isOpen}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <header className="flex justify-between items-center border-b-2 p-2">
+          <header className="flex justify-between items-center border-b-2 p-4">
             <h2 className="text-xl font-semibold">
               {isEdit ? "Edit Item" : "Add Item"}
             </h2>
             <button onClick={() => dispatch(closeModal())}>x</button>
           </header>
-          <section className="flex flex-col gap-1 p-2 ">
+          <section className="flex flex-col gap-1 p-3 ">
             <div className="flex items-center justify-center">
               <div>
                 <span>구매일</span>
@@ -150,7 +152,7 @@ export default function ItemEditorModal() {
                 />
               </div>
             </div>
-            <span>구매금액</span>
+            <span>구매금액($USD)</span>
             <input
               className="border-2 rounded-md py-2"
               required
@@ -175,8 +177,8 @@ export default function ItemEditorModal() {
               })}
             />
           </section>
-          <footer className="flex justify-center items-start">
-            <button>{isEdit ? "Edit Item" : "Add Item"}</button>
+          <footer className="flex justify-center items-start p-3">
+            <Button>{isEdit ? "Edit Item" : "Add Item"}</Button>
           </footer>
         </form>
       </ModalContainer>
