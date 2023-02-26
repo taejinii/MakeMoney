@@ -25,6 +25,7 @@ interface ItemsType {
 export default function InventoryTable() {
   const [items, setItmes] = useState<ItemsType[]>([]);
   const [isSoldOut, setIsSoldOut] = useState(false);
+  const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,7 +35,16 @@ export default function InventoryTable() {
   const deleteItemHandler = (id: number) => {
     deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
   };
-
+  const getUsdRate = async () => {
+    const reponse = await axios.get(
+      "https://v6.exchangerate-api.com/v6/4a46f80f2c45093574a4d443/latest/USD"
+    );
+    setUsdRate(reponse.data.conversion_rates.KRW);
+  };
+  useEffect(() => {
+    getUsdRate();
+  }, []);
+  console.log(usdRate);
   const handleCheck = (check: boolean, id: number) => {
     axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: check });
     setIsSoldOut(!isSoldOut);
@@ -70,7 +80,7 @@ export default function InventoryTable() {
       </thead>
       <tbody>
         {items.map((item) => {
-          const krwPrice = item.quantity * (item.price * 1317);
+          const krwPrice = item.quantity * (item.price * usdRate);
           const duty = krwPrice * 0.25;
           const totalPrice = krwPrice + duty + item.shipExpense;
           const netProfit = item.sellPrice - totalPrice;

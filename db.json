@@ -33,7 +33,7 @@
       "shipExpense": 0,
       "sellPrice": 0,
       "quantity": 1,
-      "isSoldOut": false,
+      "isSoldOut": true,
       "id": 14
     },
     {
@@ -45,7 +45,7 @@
       "shipExpense": 0,
       "sellPrice": 550000,
       "quantity": 2,
-      "isSoldOut": false,
+      "isSoldOut": true,
       "id": 19
     },
     {
@@ -57,7 +57,7 @@
       "price": 200,
       "shipExpense": 15000,
       "sellPrice": 2000000,
-      "isSoldOut": false,
+      "isSoldOut": true,
       "id": 9
     },
     {

@@ -6,7 +6,7 @@ export default function InventoryHeader() {
   return (
     <header>
       <div className="flex justify-between items-center w-full mb-2">
-        <h1 className="text-3xl font-semibold">Inventory</h1>
+        <h1 className="text-4xl font-semibold">Inventory</h1>
         <div className="flex gap-3">
           <Button width="100px" onClick={() => dispatch(openModal(false))}>
             Add Item
@@ -18,7 +18,9 @@ export default function InventoryHeader() {
           </Button>
         </div>
       </div>
-      <p>Manage your inventory of shoes,clothes, and collectibles.</p>
+      <p className="font-semibold">
+        Manage your inventory of shoes,clothes, and collectibles.
+      </p>
     </header>
   );
 }

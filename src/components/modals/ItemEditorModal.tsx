@@ -32,7 +32,9 @@ export const ModalBackDrop = styled.div`
 
 export const ModalContainer = styled.div<VisibleType>`
   position: fixed;
-  display: ${(props) => (props.visible ? "block" : "none")};
+  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
+  opacity: ${(props) => (props.visible ? "1" : "0")};
+  transition: 0.3s ease-out;
   flex-direction: column;
   width: 400px;
   height: 600px;
