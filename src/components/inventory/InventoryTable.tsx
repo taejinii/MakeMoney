@@ -80,16 +80,16 @@ export default function InventoryTable() {
       </thead>
       <tbody>
         {items.map((item) => {
-          const krwPrice = item.quantity * (item.price * usdRate);
+          const krwPrice = item.quantity * (item.price * Math.floor(usdRate));
           const duty = krwPrice * 0.25;
           const totalPrice = krwPrice + duty + item.shipExpense;
           const netProfit = item.sellPrice - totalPrice;
           return (
             <tr
-              className="text-center whitespace-nowrap font-semibold hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.4)]"
+              className="text-center whitespace-nowrap font-semibold hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.4)] hover:scale-x-105 transition-all"
               key={item.id}
             >
-              <td className="p-2">
+              <td className="p-3">
                 <input
                   type={"checkbox"}
                   checked={item.isSoldOut}
@@ -97,7 +97,11 @@ export default function InventoryTable() {
                 />
               </td>
               <td>{item.buyDate}</td>
-              <td>{item.buyPlace}</td>
+              <td
+                className={item.isSoldOut ? "text-green-600" : "text-blue-600"}
+              >
+                {item.buyPlace}
+              </td>
               <td
                 className={item.isSoldOut ? "text-green-600" : "text-blue-600"}
               >

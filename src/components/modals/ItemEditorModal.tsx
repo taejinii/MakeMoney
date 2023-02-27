@@ -5,7 +5,7 @@ import Button from "../Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface VisibleType {
   visible: boolean;
@@ -54,7 +54,7 @@ export default function ItemEditorModal() {
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen, closeModal());
   const { register, handleSubmit, reset } = useForm<IFormInput>();
-
+  const [date, setDate] = useState<Date>(new Date());
   const getOriginData = useCallback(async () => {
     const result = await axios.get(
       `http://localhost:3001/items/${isEdit.itemId}`
@@ -89,11 +89,11 @@ export default function ItemEditorModal() {
         isSoldOut: false,
       });
       dispatch(closeModal());
-      window.location.reload();
+      // window.location.reload();
     } else {
       axios.patch(`http://localhost:3001/items/${isEdit.itemId}`, data);
       dispatch(closeModal());
-      window.location.reload();
+      // window.location.reload();
     }
   };
   return (

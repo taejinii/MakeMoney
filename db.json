@@ -9,48 +9,36 @@
       "price": 200,
       "shipExpense": 15000,
       "sellPrice": 2000000,
-      "isSoldOut": false,
-      "id": 12
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
-      "buyDate": "2023-02-26",
-      "price": 250,
-      "shipExpense": 0,
-      "sellPrice": 0,
-      "quantity": 1,
-      "isSoldOut": false,
-      "id": 13
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
-      "buyDate": "2023-02-25",
-      "price": 20,
-      "shipExpense": 0,
-      "sellPrice": 0,
-      "quantity": 1,
       "isSoldOut": true,
-      "id": 14
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
-      "buyDate": "2023-03-09",
-      "price": 150,
-      "shipExpense": 0,
-      "sellPrice": 550000,
-      "quantity": 2,
-      "isSoldOut": true,
-      "id": 19
+      "id": 1
     },
     {
       "buyDate": "2023-02-21",
-      "buyPlace": "아디다스 코리아",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 2
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 3
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
       "productName": "Adidas YeezyBoost 350",
       "size": "265",
       "quantity": 2,
@@ -58,7 +46,31 @@
       "shipExpense": 15000,
       "sellPrice": 2000000,
       "isSoldOut": true,
-      "id": 9
+      "id": 4
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 5
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 7
     },
     {
       "buyDate": "2023-02-21",
@@ -81,8 +93,140 @@
       "price": 200,
       "shipExpense": 15000,
       "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 9
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 10
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
       "isSoldOut": false,
-      "id": 1
+      "id": 11
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 12
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 13
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 14
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 15
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 16
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": true,
+      "id": 17
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 18
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 19
+    },
+    {
+      "buyDate": "2023-02-21",
+      "buyPlace": "나이키 코리아",
+      "productName": "Adidas YeezyBoost 350",
+      "size": "265",
+      "quantity": 2,
+      "price": 200,
+      "shipExpense": 15000,
+      "sellPrice": 2000000,
+      "isSoldOut": false,
+      "id": 20
     },
     {
       "buyDate": "2023-02-21",
@@ -106,19 +250,7 @@
       "shipExpense": 15000,
       "sellPrice": 2000000,
       "isSoldOut": false,
-      "id": 23
-    },
-    {
-      "buyDate": "2023-02-21",
-      "buyPlace": "나이키 코리아",
-      "productName": "Adidas YeezyBoost 350",
-      "size": "265",
-      "quantity": 2,
-      "price": 200,
-      "shipExpense": 15000,
-      "sellPrice": 2000000,
-      "isSoldOut": false,
-      "id": 24
+      "id": 22
     }
   ],
   "profile": {
