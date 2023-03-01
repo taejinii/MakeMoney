@@ -9,6 +9,7 @@ export const Container = styled.div`
   height: 100vh;
   overflow: auto;
   box-shadow: -2px 0px 8px -1px #555555;
+  border-radius: 40px 0px 0px 40px;
 `;
 
 export default function InventoryPage() {

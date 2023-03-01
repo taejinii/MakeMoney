@@ -5,8 +5,7 @@ import Button from "../Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useCallback, useEffect, useState } from "react";
-
+import { useCallback, useEffect } from "react";
 interface VisibleType {
   visible: boolean;
 }
@@ -32,12 +31,11 @@ export const ModalBackDrop = styled.div`
 
 export const ModalContainer = styled.div<VisibleType>`
   position: fixed;
-  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
-  opacity: ${(props) => (props.visible ? "1" : "0")};
-  transition: 0.3s ease-out;
+  scale: ${(props) => (props.visible ? "1" : "0")};
+  transition: 0.2s ease-out;
   flex-direction: column;
   width: 400px;
-  height: 600px;
+  height: 630px;
   background-color: white;
   margin: auto;
   top: 0;
@@ -49,12 +47,18 @@ export const ModalContainer = styled.div<VisibleType>`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
+const Input = styled.input``;
+
 export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen, closeModal());
-  const { register, handleSubmit, reset } = useForm<IFormInput>();
-  const [date, setDate] = useState<Date>(new Date());
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormInput>();
   const getOriginData = useCallback(async () => {
     const result = await axios.get(
       `http://localhost:3001/items/${isEdit.itemId}`
@@ -96,6 +100,7 @@ export default function ItemEditorModal() {
       // window.location.reload();
     }
   };
+  console.log(errors);
   return (
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
@@ -105,79 +110,117 @@ export default function ItemEditorModal() {
             <h2 className="text-xl font-semibold">
               {isEdit ? "Edit Item" : "Add Item"}
             </h2>
-            <button onClick={() => dispatch(closeModal())}>x</button>
+            <button type="button" onClick={() => dispatch(closeModal())}>
+              x
+            </button>
           </header>
           <section className="flex flex-col gap-1 p-3 ">
             <div className="flex items-center justify-center">
               <div>
-                <span>구매일</span>
+                <label htmlFor="buyDate">구매일</label>
                 <input
-                  className="border-2 rounded-md  p-2"
-                  type={"date"}
+                  className="item-editor"
+                  id="buyDate"
+                  type="date"
                   required
                   {...register("buyDate")}
                 />
               </div>
               <div>
-                <span>구매처</span>
+                <label htmlFor="buyPlace">구매처</label>
                 <input
-                  className="border-2 rounded-md py-2 w-full"
+                  className="item-editor w-full"
+                  id="buyPlace"
                   required
                   {...register("buyPlace")}
                 />
               </div>
             </div>
-            <span>제품명</span>
+            <label htmlFor="productName">제품명</label>
             <input
-              className="border-2 rounded-md py-2"
+              className="item-editor"
+              id="productName"
               required
               {...register("productName")}
             />
-            <div className="flex ">
+            <div className="flex">
               <div>
-                <span>사이즈</span>
+                <label htmlFor="size">사이즈</label>
                 <input
-                  className="border-2 rounded-md py-2"
-                  type={"text"}
-                  required
-                  {...register("size")}
-                />
-              </div>
-              <div>
-                <span>수량</span>
-                <input
-                  className="border-2 rounded-md w-full py-2"
-                  required
-                  {...register("quantity", {
-                    valueAsNumber: true,
+                  className="item-editor"
+                  id="size"
+                  type="text"
+                  {...register("size", {
+                    required: "정확한 사이즈를 입력 해주세요.",
                   })}
                 />
+                {errors.size && (
+                  <div className="error-msg">{errors.size.message}</div>
+                )}
+              </div>
+              <div>
+                <label htmlFor="quantity">수량</label>
+                <input
+                  className="item-editor"
+                  id="quantity"
+                  {...register("quantity", {
+                    required: "정확한 수량을 입력 해주세요.",
+                    pattern: {
+                      value: /^[0-9.]*$/,
+                      message: "숫자를 입력해주세요",
+                    },
+                  })}
+                />
+                {errors.quantity && (
+                  <div className="error-msg">{errors.quantity.message}</div>
+                )}
               </div>
             </div>
-            <span>구매금액($USD)</span>
+            <label htmlFor="price">구매금액($USD)</label>
             <input
-              className="border-2 rounded-md py-2"
-              required
+              className="item-editor"
+              id="price"
               {...register("price", {
-                valueAsNumber: true,
+                required: "구매금액을 입력 해주세요.",
+                pattern: {
+                  value: /^[0-9.]*$/,
+                  message: "숫자를 입력해주세요",
+                },
               })}
             />
-            <span>배대지 비용</span>
+            {errors.price && (
+              <div className="error-msg">{errors.price.message}</div>
+            )}
+            <label htmlFor="shipExpense">배대지 비용</label>
             <input
-              className="border-2 rounded-md py-2"
+              className="item-editor"
+              id="shipExpense"
               defaultValue={0}
               {...register("shipExpense", {
-                valueAsNumber: true,
+                pattern: {
+                  value: /^[0-9.]*$/,
+                  message: "숫자를 입력해주세요",
+                },
               })}
             />
-            <span>판매 가격</span>
+            {errors.shipExpense && (
+              <div className="error-msg">{errors.shipExpense.message}</div>
+            )}
+            <label htmlFor="sellPrice">판매 가격</label>
             <input
-              className="border-2 rounded-md py-2"
+              className="item-editor"
+              id="sellPrice"
               defaultValue={0}
               {...register("sellPrice", {
-                valueAsNumber: true,
+                pattern: {
+                  value: /^[0-9.]*$/,
+                  message: "숫자를 입력해주세요",
+                },
               })}
             />
+            {errors.sellPrice && (
+              <div className="error-msg">{errors.sellPrice.message}</div>
+            )}
           </section>
           <footer className="flex justify-center items-start p-3">
             <Button>{isEdit ? "Edit Item" : "Add Item"}</Button>

@@ -12,18 +12,23 @@ const SideBarContainer = styled.aside`
 const ProfileWrapper = styled.header`
   display: flex;
   flex-direction: column;
-  height: 20%;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 30%;
 `;
 const SideBarMenu = styled.nav`
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 70%;
 `;
 export default function SideBar() {
   return (
     <SideBarContainer>
       <ProfileWrapper>
-        <Link to={"/"}>Logo</Link>
+        <Link to={"/"} className="font-bold text-xl">
+          MakeMoney
+        </Link>
         <Profile />
       </ProfileWrapper>
       <SideBarMenu>
