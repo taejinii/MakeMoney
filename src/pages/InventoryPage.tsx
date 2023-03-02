@@ -4,7 +4,7 @@ import InventoryTable from "../components/inventory/InventoryTable";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 40px;
   width: 100vw;
   height: 100vh;
   overflow: auto;

@@ -47,8 +47,6 @@ export const ModalContainer = styled.div<VisibleType>`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
-const Input = styled.input``;
-
 export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
@@ -73,7 +71,7 @@ export default function ItemEditorModal() {
         productName: "",
         buyPlace: "",
         size: "",
-        buyDate: new Date(),
+        buyDate: "",
         price: 0,
         shipExpense: 0,
         sellPrice: 0,
@@ -100,7 +98,6 @@ export default function ItemEditorModal() {
       // window.location.reload();
     }
   };
-  console.log(errors);
   return (
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
