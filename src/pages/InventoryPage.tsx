@@ -4,10 +4,12 @@ import InventoryTable from "../components/inventory/InventoryTable";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 40px;
   width: 100vw;
   height: 100vh;
   overflow: auto;
+  box-shadow: -2px 0px 8px -1px #555555;
+  border-radius: 40px 0px 0px 40px;
 `;
 
 export default function InventoryPage() {
