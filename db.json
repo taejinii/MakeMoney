@@ -7,7 +7,7 @@
       "buyDate": "2023-03-01",
       "price": "200",
       "shipExpense": "0",
-      "sellPrice": "0",
+      "sellPrice": "100000",
       "quantity": "10",
       "isSoldOut": false,
       "id": 1
@@ -59,6 +59,66 @@
       "quantity": "01",
       "isSoldOut": false,
       "id": 5
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "1",
+      "buyDate": "2023-02-28",
+      "price": "100",
+      "shipExpense": 0,
+      "sellPrice": "1500000",
+      "quantity": "1",
+      "isSoldOut": false,
+      "id": 31
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "1",
+      "buyDate": "2023-02-28",
+      "price": "100",
+      "shipExpense": 0,
+      "sellPrice": "1500000",
+      "quantity": "1",
+      "isSoldOut": false,
+      "id": 32
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "1",
+      "buyDate": "2023-02-28",
+      "price": "100",
+      "shipExpense": 0,
+      "sellPrice": "15000000",
+      "quantity": "1",
+      "isSoldOut": false,
+      "id": 33
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "265",
+      "buyDate": "2023-03-01",
+      "price": "200",
+      "shipExpense": "0",
+      "sellPrice": "10000",
+      "quantity": "10",
+      "isSoldOut": false,
+      "id": 122
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "265",
+      "buyDate": "2023-03-01",
+      "price": "200",
+      "shipExpense": "0",
+      "sellPrice": "1000000",
+      "quantity": "10",
+      "isSoldOut": false,
+      "id": 113
     }
   ],
   "profile": {

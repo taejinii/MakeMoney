@@ -1,5 +1,4 @@
 {
-  "proxy": "https://www.koreaexim.go.kr/",
   "name": "makemoney",
   "version": "0.1.0",
   "private": true,
