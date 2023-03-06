@@ -10,7 +10,15 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-
+import styled from "styled-components";
+const ChartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  /* background-color: #96ceda; */
+  background: linear-gradient(#ffffff, #96ceda);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+`;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,7 +30,6 @@ ChartJS.register(
   Legend
 );
 export default function SalesChart({ data, month }: any) {
-  console.log("data", data);
   const buyDate = data.map((el: any) => el.buyDate);
   const labels = Array.from(new Set(buyDate.sort()));
   const dailyBuyCount = buyDate.reduce((acc: any, cur: any) => {
@@ -34,15 +41,24 @@ export default function SalesChart({ data, month }: any) {
     return acc;
   }, {});
 
-  const options = {
+  const options: any = {
     responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { display: false }, min: 0, ticks: { stepSize: 1 } },
+    },
+    elements: { point: { radius: 5 } },
     plugins: {
-      legend: {
-        position: "top" as const,
-      },
+      legend: false,
       title: {
         display: true,
-        text: `${month} Sales`,
+        color: "black",
+        text: `${month} Monthly Checkout`,
+        padding: {
+          top: 10,
+          bottom: 30,
+        },
       },
     },
   };
@@ -51,16 +67,17 @@ export default function SalesChart({ data, month }: any) {
     datasets: [
       {
         fill: true,
-        label: "Dataset 2",
+        label: "Checkout",
         data: Object.values(dailyBuyCount),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "#ffffff",
+        backgroundColor: "#96ceda",
+        tension: 0.2,
       },
     ],
   };
   return (
-    <div className="w-full h-full">
+    <ChartContainer>
       <Line options={options} data={chartData} />
-    </div>
+    </ChartContainer>
   );
 }
