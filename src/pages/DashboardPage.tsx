@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CompareIncome from "../components/dashboard/CompareIncome";
 import SalesChart from "../components/dashboard/SalesChart";
+import MonthlyDetailCarousel from "../components/dashboard/MonthlyDetailCarousel";
 interface selectTypes {
   id: number;
   month: string;
@@ -37,16 +38,17 @@ export default function DashboardPage() {
     setMonth(e.target.value);
   };
   return (
-    <Container>
-      <select onChange={onMonth}>
+    <Container className="gap-5">
+      <select onChange={onMonth} className="gap-5 border-2 w-20">
         {selectList.map((el) => {
           return <option key={el.id}>{el.month}</option>;
         })}
       </select>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-5">
         <CompareIncome data={data} month={month} />
         <SalesChart data={data} month={month} />
       </div>
+      <MonthlyDetailCarousel data={data} />
     </Container>
   );
 }

@@ -70,7 +70,7 @@ export default function InventoryTable() {
       {items.length > 0 ? (
         <table>
           <thead>
-            <tr className="whitespace-nowrap border-b-2 sticky -top-8 bg-white">
+            <tr className="whitespace-nowrap border-b-2 sticky -top-10 bg-white">
               {tableHeader.map((header, index) => {
                 return (
                   <th key={index} className="py-3">
