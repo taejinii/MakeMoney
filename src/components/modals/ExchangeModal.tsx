@@ -1,4 +1,5 @@
 import axios from "axios";
+import React from "react";
 import { useState, useEffect } from "react";
 
 interface CurrencyTypes {
@@ -10,16 +11,15 @@ export default function ExchangeModal() {
   const currencyName = ["EUR", "USD", "GBP", "JPY"];
   const [currency, setCurrency] = useState<any>([]);
   const exchangeRate = async () => {
-    let currencyArr = [];
+    let currencyArr: any = [];
     for (let i = 0; i < currencyName.length; i++) {
       const response = await axios.get(
-        `https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW${currencyName[i]}`
+        process.env.REACT_APP_CURRENCY + `${currencyName[i]}`
       );
       currencyArr.push(response.data[0]);
     }
     return setCurrency(currencyArr);
   };
-
   useEffect(() => {
     exchangeRate();
   }, []);

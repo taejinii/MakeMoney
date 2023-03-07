@@ -1,3 +1,4 @@
+import React from "react";
 import Card from "./Card";
 export interface EditData {
   title: string;
@@ -6,7 +7,7 @@ export interface EditData {
   purchase?: number;
 }
 export default function MonthlyDetailCarousel({ data }: any) {
-  let arr = [];
+  let arr: any = [];
   const soldOut = data.filter((el: any) => el.isSoldOut === true);
   const unSoldOut = data.filter((el: any) => el.isSoldOut !== true);
   arr = [
