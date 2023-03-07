@@ -9,7 +9,7 @@ export default function SideBarItems() {
   return (
     <ul className="flex flex-col justify-start items-center gap-3 h-full w-full mt-5 font-semibold">
       Menu
-      <Link to={"dashboard"} className="sidebar-btn">
+      <Link to={"/"} className="sidebar-btn">
         <div className="mr-1">
           <MdSpaceDashboard />
         </div>

@@ -10,7 +10,8 @@ interface selectTypes {
 }
 export default function DashboardPage() {
   const [data, setData] = useState([]);
-  const [month, setMonth] = useState("01");
+  const [month, setMonth] = useState("01"); //<<현재달로 기본값 설정해주기
+
   const getData = async () => {
     const { data } = await axios.get(
       `http://localhost:3001/items?buyDate_gte=2023-${month}-01&buyDate_lte=2023-${month}-31`
@@ -39,7 +40,10 @@ export default function DashboardPage() {
   };
   return (
     <Container className="gap-5">
-      <select onChange={onMonth} className="gap-5 border-2 w-20">
+      <select
+        onChange={onMonth}
+        className="gap-5  w-20 rounded-xl shadow-xl border-2 border-black"
+      >
         {selectList.map((el) => {
           return <option key={el.id}>{el.month}</option>;
         })}
