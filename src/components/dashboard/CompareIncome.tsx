@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function CompareIncome({ data, month }: any) {
   console.log(data);
   const sales = data
