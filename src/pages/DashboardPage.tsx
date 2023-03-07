@@ -10,8 +10,7 @@ interface selectTypes {
 }
 export default function DashboardPage() {
   const [data, setData] = useState([]);
-  const [month, setMonth] = useState("01"); //<<현재달로 기본값 설정해주기
-
+  const [month, setMonth] = useState("01"); //
   const getData = async () => {
     const { data } = await axios.get(
       `http://localhost:3001/items?buyDate_gte=2023-${month}-01&buyDate_lte=2023-${month}-31`
