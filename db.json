@@ -275,6 +275,18 @@
       "quantity": "1",
       "isSoldOut": false,
       "id": 25
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "265",
+      "buyDate": "2023-03-07",
+      "price": "10",
+      "shipExpense": 0,
+      "sellPrice": "100000",
+      "quantity": "10",
+      "isSoldOut": false,
+      "id": 26
     }
   ],
   "profile": {
