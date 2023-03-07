@@ -1,5 +1,3 @@
-import { Container } from "./InventoryPage";
-
 export default function ExpensePage() {
-  return <Container>d</Container>;
+  return <div>환율모달 버튼으로 대체</div>;
 }
