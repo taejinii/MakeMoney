@@ -1,5 +1,6 @@
 import React from "react";
 import useCalculate from "../../hooks/useCalculate";
+
 export default function CompareIncome({ data, month, prevData }: any) {
   const sales = useCalculate(data, "sellPrice");
   const spending =
@@ -13,11 +14,23 @@ export default function CompareIncome({ data, month, prevData }: any) {
   const spendingRate = Math.round(
     ((spending - prevSpending) / prevSpending) * 100
   );
-
+  const getRate = (rate: number) => {
+    if (isNaN(rate)) {
+      return "There is no transaction record.";
+    }
+    if (rate === Infinity) {
+      return "There is no transaction record from last month.";
+    }
+    if (rate > 0) {
+      return `Sales increase ${rate}% from last month`;
+    } else {
+      return `Sales decrease ${rate}% from last month`;
+    }
+  };
   return (
     <div className="flex flex-col  items-stretch p-4 rounded-2xl shadow-2xl bg-[#101322] text-white font-bold">
       <header>
-        <h1 className="text-2xl  p-4">{month} Preview</h1>
+        <h1 className="text-2xl  p-4">{month}월 Preview</h1>
       </header>
       <main className="flex flex-col ">
         <div className="flex justify-around">
@@ -36,16 +49,8 @@ export default function CompareIncome({ data, month, prevData }: any) {
             Profit is {(sales - spending).toLocaleString()}₩
           </span>
         </div>
-        <div className="p-4">
-          {salesRate > 0
-            ? `Sales increase ${salesRate}% from last month`
-            : `Sales decrease ${salesRate}% from last month`}
-        </div>
-        <div className="p-4">
-          {spendingRate > 0
-            ? `Sales increase ${spendingRate}% from last month`
-            : `Sales decrease ${spendingRate}% from last month`}
-        </div>
+        <div className="p-4">{getRate(salesRate)}</div>
+        <div className="p-4">{getRate(spendingRate)}</div>
         <div className=" w-16 h-16 m-auto">
           <img
             className="w-full h-full "
