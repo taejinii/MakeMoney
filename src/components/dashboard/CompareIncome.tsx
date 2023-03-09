@@ -1,30 +1,14 @@
 import React from "react";
-
+import useCalculate from "../../hooks/useCalculate";
 export default function CompareIncome({ data, month, prevData }: any) {
-  const sales = data
-    .map((el: { sellPrice: string }) => Number(el.sellPrice))
-    .reduce((prev: number, curr: number) => prev + curr, 0);
+  const sales = useCalculate(data, "sellPrice");
   const spending =
-    data
-      .map((el: { price: number }) => Number(el.price) * 1317)
-      .reduce((prev: number, curr: number) => prev + curr, 0) +
-    data
-      .map((el: { shipExpense: number }) => Number(el.shipExpense))
-      .reduce((prev: number, curr: number) => prev + curr, 0);
-  const prevSales = prevData
-    .map((el: { sellPrice: string }) => Number(el.sellPrice))
-    .reduce((prev: number, curr: number) => prev + curr, 0);
+    useCalculate(data, "price") * 1317 + useCalculate(data, "shipExpense");
+  const prevSales = useCalculate(prevData, "sellPrice");
   const prevSpending =
-    prevData
-      .map((el: { price: number }) => Number(el.price) * 1317)
-      .reduce((prev: number, curr: number) => prev + curr, 0) +
-    prevData
-      .map((el: { shipExpense: number }) => Number(el.shipExpense))
-      .reduce((prev: number, curr: number) => prev + curr, 0);
-  console.log("sales", sales);
-  console.log("spending", spending);
-  console.log("prevSales", prevSales);
-  console.log("prevSpending", prevSpending);
+    useCalculate(prevData, "price") * 1317 +
+    useCalculate(prevData, "shipExpense");
+
   const salesRate = Math.round(((sales - prevSales) / prevSales) * 100);
   const spendingRate = Math.round(
     ((spending - prevSpending) / prevSpending) * 100

@@ -1,6 +1,6 @@
 import { Container } from "./InventoryPage";
 import React, { useState, useEffect } from "react";
-import { getCurMonth, getPrevMonth, getYear } from "../utils/getCurMonth";
+import { getCurMonth, getPrevMonth, getYear } from "../utils/getDate";
 import axios from "axios";
 import CompareIncome from "../components/dashboard/CompareIncome";
 import SalesChart from "../components/dashboard/SalesChart";
