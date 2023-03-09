@@ -1,25 +1,40 @@
 import { Container } from "./InventoryPage";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { getCurMonth, getPrevMonth, getYear } from "../utils/getCurMonth";
 import axios from "axios";
 import CompareIncome from "../components/dashboard/CompareIncome";
 import SalesChart from "../components/dashboard/SalesChart";
 import MonthlyDetailCarousel from "../components/dashboard/MonthlyDetailCarousel";
+
 interface selectTypes {
   id: number;
   month: string;
 }
+
 export default function DashboardPage() {
   const [data, setData] = useState([]);
-  const [month, setMonth] = useState("01"); //
+  const [prevData, setPrevData] = useState([]);
+  const [month, setMonth] = useState(getCurMonth(new Date()));
+  const year = getYear(new Date());
+  const prevMonth = getPrevMonth(Number(month));
   const getData = async () => {
     const { data } = await axios.get(
-      `http://localhost:3001/items?buyDate_gte=2023-${month}-01&buyDate_lte=2023-${month}-31`
+      `http://localhost:3001/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31`
     );
     setData(data);
   };
+  const getPrevData = async () => {
+    const { data } = await axios.get(
+      `http://localhost:3001/items?buyDate_gte=${year}-${prevMonth}-01&buyDate_lte=${year}-${prevMonth}-31`
+    );
+    setPrevData(data);
+  };
+
   useEffect(() => {
     getData();
+    getPrevData();
   }, [month]);
+
   const selectList: selectTypes[] = [
     { id: 1, month: "01" },
     { id: 2, month: "02" },
@@ -34,6 +49,7 @@ export default function DashboardPage() {
     { id: 11, month: "11" },
     { id: 12, month: "12" },
   ];
+
   const onMonth = (e: any) => {
     setMonth(e.target.value);
   };
@@ -48,7 +64,7 @@ export default function DashboardPage() {
         })}
       </select>
       <div className="flex flex-row justify-between gap-5">
-        <CompareIncome data={data} month={month} />
+        <CompareIncome data={data} month={month} prevData={prevData} />
         <SalesChart data={data} month={month} />
       </div>
       <MonthlyDetailCarousel data={data} />

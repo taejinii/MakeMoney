@@ -4,6 +4,7 @@ import InventoryPage from "./pages/InventoryPage";
 import DashboardPage from "./pages/DashboardPage";
 import StockxPage from "./pages/StockxPage";
 import ExpensePage from "./pages/ExpensePage";
+import React from "react";
 function App() {
   return (
     <BrowserRouter>
