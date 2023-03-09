@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getItem, deleteItem } from "../../utils/api";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
@@ -29,16 +29,15 @@ export default function InventoryTable() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getItem().then((res) => setItmes(res));
+    getItem().then((res) => {
+      setItmes(res);
+    });
   }, [isSoldOut]);
-
   const deleteItemHandler = (id: number) => {
     deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
   };
   const getUsdRate = async () => {
-    const reponse = await axios.get(
-      "https://v6.exchangerate-api.com/v6/4a46f80f2c45093574a4d443/latest/USD"
-    );
+    const reponse = await axios.get(process.env.REACT_APP_USD);
     setUsdRate(reponse.data.conversion_rates.KRW);
   };
   useEffect(() => {
