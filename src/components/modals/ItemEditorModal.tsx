@@ -5,7 +5,8 @@ import Button from "../Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
+import useToast from "../../hooks/useToast";
 interface VisibleType {
   visible: boolean;
 }
@@ -49,6 +50,7 @@ export const ModalContainer = styled.div<VisibleType>`
 
 export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
+  const { addToast } = useToast();
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen, closeModal());
   const {
@@ -86,14 +88,22 @@ export default function ItemEditorModal() {
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
     if (!isEdit) {
-      axios.post("http://localhost:3001/items", {
-        ...data,
-        isSoldOut: false,
-      });
+      axios
+        .post("http://localhost:3001/items", {
+          ...data,
+          isSoldOut: false,
+        })
+        .then(() => {
+          addToast({ type: "success", text: "Successfully saved emoji" });
+        });
       dispatch(closeModal());
-      // window.location.reload();
+      // data를 다시 불러오는 함수를 불러야함.
     } else {
-      axios.patch(`http://localhost:3001/items/${isEdit.itemId}`, data);
+      axios
+        .patch(`http://localhost:3001/items/${isEdit.itemId}`, data)
+        .then(() => {
+          addToast({ type: "success", text: "Successfully edited emoji" });
+        });
       dispatch(closeModal());
       // window.location.reload();
     }

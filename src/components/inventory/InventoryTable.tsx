@@ -3,6 +3,7 @@ import { getItem, deleteItem } from "../../utils/api";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
+import useToast from "../../hooks/useToast";
 import axios from "axios";
 
 interface ItemsType {
@@ -26,6 +27,7 @@ export default function InventoryTable() {
   const [items, setItmes] = useState<ItemsType[]>([]);
   const [isSoldOut, setIsSoldOut] = useState(false);
   const [usdRate, setUsdRate] = useState<number>(0);
+  const { addToast } = useToast();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,7 +36,12 @@ export default function InventoryTable() {
     });
   }, [isSoldOut]);
   const deleteItemHandler = (id: number) => {
-    deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
+    try {
+      deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
+      addToast({ type: "success", text: "Succefully deleted emoji!!" });
+    } catch {
+      addToast({ type: "error", text: "Error occurred emoji" });
+    }
   };
   const getUsdRate = async () => {
     const reponse = await axios.get(process.env.REACT_APP_USD);
@@ -43,7 +50,6 @@ export default function InventoryTable() {
   useEffect(() => {
     getUsdRate();
   }, []);
-  console.log(usdRate);
   const handleCheck = (check: boolean, id: number) => {
     axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: check });
     setIsSoldOut(!isSoldOut);
@@ -66,7 +72,7 @@ export default function InventoryTable() {
   ];
   return (
     <>
-      {items.length > 0 ? (
+      {items && items.length !== 0 ? (
         <table>
           <thead>
             <tr className="whitespace-nowrap border-b-2 sticky -top-10 bg-white">
