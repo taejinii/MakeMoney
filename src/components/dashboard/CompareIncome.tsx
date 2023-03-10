@@ -15,6 +15,9 @@ export default function CompareIncome({ data, month, prevData }: any) {
     ((spending - prevSpending) / prevSpending) * 100
   );
   const getRate = (rate: number) => {
+    if (month === "01") {
+      return `It's the beginning of ${new Date().getFullYear()} Make Money!!!`;
+    }
     if (isNaN(rate)) {
       return "There is no transaction record.";
     }

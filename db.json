@@ -154,18 +154,6 @@
       "sellPrice": "1000000",
       "quantity": "1",
       "isSoldOut": false,
-      "id": 15
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
-      "buyDate": "2023-02-04",
-      "price": "100",
-      "shipExpense": 0,
-      "sellPrice": "1000000",
-      "quantity": "1",
-      "isSoldOut": false,
       "id": 16
     },
     {
@@ -184,18 +172,6 @@
       "productName": "Adidas YeezyBoost 350",
       "buyPlace": "kith",
       "size": "265",
-      "buyDate": "2023-02-05",
-      "price": "100",
-      "shipExpense": 0,
-      "sellPrice": "1000000",
-      "quantity": "1",
-      "isSoldOut": true,
-      "id": 18
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
       "buyDate": "2023-02-06",
       "price": "100",
       "shipExpense": 0,
@@ -203,18 +179,6 @@
       "quantity": "1",
       "isSoldOut": true,
       "id": 19
-    },
-    {
-      "productName": "Adidas YeezyBoost 350",
-      "buyPlace": "kith",
-      "size": "265",
-      "buyDate": "2023-02-06",
-      "price": "100",
-      "shipExpense": "15000",
-      "sellPrice": "1000000",
-      "quantity": "1",
-      "isSoldOut": true,
-      "id": 20
     },
     {
       "productName": "Adidas YeezyBoost 350",
@@ -263,6 +227,30 @@
       "quantity": "1",
       "isSoldOut": false,
       "id": 24
+    },
+    {
+      "productName": "Adidas YeezyBoost 350 Adidas YeezyBoost 350",
+      "buyPlace": "아이다스 미공홈",
+      "size": "265",
+      "buyDate": "2023-01-19",
+      "price": "220",
+      "shipExpense": "25000",
+      "sellPrice": "460000",
+      "quantity": "1",
+      "isSoldOut": true,
+      "id": 25
+    },
+    {
+      "productName": "Adidas YeezyBoost 350",
+      "buyPlace": "kith",
+      "size": "225",
+      "buyDate": "2023-03-12",
+      "price": "150",
+      "shipExpense": "10000",
+      "sellPrice": "0",
+      "quantity": "1",
+      "isSoldOut": false,
+      "id": 26
     }
   ],
   "profile": {
