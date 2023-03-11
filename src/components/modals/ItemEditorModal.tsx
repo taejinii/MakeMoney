@@ -94,7 +94,7 @@ export default function ItemEditorModal() {
           isSoldOut: false,
         })
         .then(() => {
-          addToast({ type: "success", text: "Successfully saved emoji" });
+          addToast({ type: "success", text: "Successfully saved!!!" });
         });
       dispatch(closeModal());
       // data를 다시 불러오는 함수를 불러야함.
@@ -102,7 +102,7 @@ export default function ItemEditorModal() {
       axios
         .patch(`http://localhost:3001/items/${isEdit.itemId}`, data)
         .then(() => {
-          addToast({ type: "success", text: "Successfully edited emoji" });
+          addToast({ type: "success", text: "Successfully edited!!!" });
         });
       dispatch(closeModal());
       // window.location.reload();
