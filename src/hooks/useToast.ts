@@ -14,9 +14,9 @@ export default function useToast() {
       id,
     };
     dispatch(add(toastId));
-    // setTimeout(() => {
-    //   deleteToast(id);
-    // }, 5000);
+    setTimeout(() => {
+      deleteToast(id);
+    }, 3000);
   };
 
   return { addToast, deleteToast };

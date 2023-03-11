@@ -14,10 +14,7 @@ const ToastWrapper = styled.div`
   right: 40px;
   font-weight: bold;
   font-size: x-large;
-  background-color: white;
-  border-radius: 25px;
-  z-index: 9999;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 999;
 `;
 
 export default function Toast() {
@@ -33,7 +30,7 @@ export default function Toast() {
             onClick={() => {
               deleteToast(toast.id);
             }}
-            className={`cursor-pointer py-2 px-4   ${
+            className={`cursor-pointer py-2 px-4 font-medium mt-4 bg-blue-600 text-white  rounded-md animate-slideToast shadow-2xl ${
               toast.type === "success" ? "text-green-700 " : "text-red-700"
             }`}
           >

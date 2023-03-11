@@ -38,9 +38,9 @@ export default function InventoryTable() {
   const deleteItemHandler = (id: number) => {
     try {
       deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
-      addToast({ type: "success", text: "Succefully deleted emoji!!" });
+      addToast({ type: "success", text: "Succefully deleted!!!" });
     } catch {
-      addToast({ type: "error", text: "Error occurred emoji" });
+      addToast({ type: "error", text: "Error occurred." });
     }
   };
   const getUsdRate = async () => {
@@ -94,7 +94,7 @@ export default function InventoryTable() {
               const netProfit = item.sellPrice - totalPrice;
               return (
                 <tr
-                  className="text-center whitespace-nowrap font-semibold hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.4)] hover:scale-x-105 transition-all"
+                  className="text-center whitespace-nowrap font-semibold hover:bg-opacity-10 hover:bg-black"
                   key={item.id}
                 >
                   <td className="p-3">
