@@ -52,7 +52,6 @@ interface SetItems {
   setItems: React.Dispatch<React.SetStateAction<any>>;
 }
 export default function ItemEditorModal({ setItems }: SetItems) {
-  console.log(setItems);
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
