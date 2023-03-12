@@ -1,48 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { getItem, deleteItem } from "../../utils/api";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
-import useToast from "../../hooks/useToast";
 import axios from "axios";
 
-interface ItemsType {
-  id: number;
-  buyDate: string;
-  buyPlace: string;
-  productName: string;
-  quantity: number;
-  price: number;
-  krwPrice: number;
-  shipExpense: number;
-  customsDuty: number;
-  totalPrice: number;
-  sellPrice: number;
-  netProfit: number;
-  isSoldOut: boolean;
-  size: string;
-}
-
-export default function InventoryTable() {
-  const [items, setItmes] = useState<ItemsType[]>([]);
-  const [isSoldOut, setIsSoldOut] = useState(false);
+export default function InventoryTable({
+  items,
+  deleteItemHandler,
+  handleCheck,
+}) {
+  // const [items, setItmes] = useState<ItemsType[]>([]);
   const [usdRate, setUsdRate] = useState<number>(0);
-  const { addToast } = useToast();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    getItem().then((res) => {
-      setItmes(res);
-    });
-  }, [isSoldOut]);
-  const deleteItemHandler = (id: number) => {
-    try {
-      deleteItem(id)?.then(() => getItem().then((res) => setItmes(res)));
-      addToast({ type: "success", text: "Succefully deleted!!!" });
-    } catch {
-      addToast({ type: "error", text: "Error occurred." });
-    }
-  };
   const getUsdRate = async () => {
     const reponse = await axios.get(process.env.REACT_APP_USD);
     setUsdRate(reponse.data.conversion_rates.KRW);
@@ -50,10 +20,7 @@ export default function InventoryTable() {
   useEffect(() => {
     getUsdRate();
   }, []);
-  const handleCheck = (check: boolean, id: number) => {
-    axios.patch(`http://localhost:3001/items/${id}`, { isSoldOut: check });
-    setIsSoldOut(!isSoldOut);
-  };
+
   const tableHeader: string[] = [
     "판매여부",
     "구매일",

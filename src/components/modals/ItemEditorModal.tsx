@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
 import useToast from "../../hooks/useToast";
+import { getItem } from "../../utils/api";
 interface VisibleType {
   visible: boolean;
 }
@@ -26,8 +27,8 @@ export const ModalBackDrop = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const ModalContainer = styled.div<VisibleType>`
@@ -47,8 +48,11 @@ export const ModalContainer = styled.div<VisibleType>`
   z-index: 20;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
-
-export default function ItemEditorModal() {
+interface SetItems {
+  setItems: React.Dispatch<React.SetStateAction<any>>;
+}
+export default function ItemEditorModal({ setItems }: SetItems) {
+  console.log(setItems);
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
@@ -66,7 +70,6 @@ export default function ItemEditorModal() {
     reset(result.data);
   }, [isEdit.itemId, reset]);
 
-  console.log("isEdit", isEdit);
   useEffect(() => {
     if (isEdit.itemId === 0 || isEdit.itemId === undefined || !isEdit) {
       reset({
@@ -85,8 +88,7 @@ export default function ItemEditorModal() {
     }
   }, [getOriginData, isEdit, isEdit.itemId, reset]);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
     if (!isEdit) {
       axios
         .post("http://localhost:3001/items", {
@@ -94,18 +96,20 @@ export default function ItemEditorModal() {
           isSoldOut: false,
         })
         .then(() => {
-          addToast({ type: "success", text: "Successfully saved!!!" });
+          addToast({ type: "success", text: "Successfully saved!" });
+          getItem().then((res) => setItems(res));
         });
       dispatch(closeModal());
-      // data를 다시 불러오는 함수를 불러야함.
+
+      //인벤토리테이블 컴포넌트에서 이 컴포넌트를 사용한다음 props로 setState함수를 넘겨줘서 여기서 갱신해야할듯 data를 다시 불러오는 함수를 불러야함.
     } else {
       axios
         .patch(`http://localhost:3001/items/${isEdit.itemId}`, data)
         .then(() => {
-          addToast({ type: "success", text: "Successfully edited!!!" });
+          addToast({ type: "success", text: "Successfully edited!" });
+          getItem().then((res) => setItems(res));
         });
       dispatch(closeModal());
-      // window.location.reload();
     }
   };
   return (
