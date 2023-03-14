@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import axios from "axios";
+import customAxios from "../../utils/axios";
 import useModalClose from "../../hooks/useModalClose";
 import Button from "../Button";
 import { closeModal } from "../../store/modalSlice";
@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
 import useToast from "../../hooks/useToast";
 import { getItem } from "../../utils/api";
+
 interface VisibleType {
   visible: boolean;
 }
@@ -53,6 +54,7 @@ interface SetItems {
 }
 export default function ItemEditorModal({ setItems }: SetItems) {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
+  console.log(isEdit);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen, closeModal());
@@ -63,14 +65,12 @@ export default function ItemEditorModal({ setItems }: SetItems) {
     formState: { errors },
   } = useForm<IFormInput>();
   const getOriginData = useCallback(async () => {
-    const result = await axios.get(
-      `http://localhost:3001/items/${isEdit.itemId}`
-    );
+    const result = await customAxios.get(`/items/${isEdit?.itemId}`);
     reset(result.data);
-  }, [isEdit.itemId, reset]);
+  }, [isEdit?.itemId, reset]);
 
   useEffect(() => {
-    if (isEdit.itemId === 0 || isEdit.itemId === undefined || !isEdit) {
+    if (isEdit?.itemId === 0 || isEdit?.itemId === undefined || !isEdit) {
       reset({
         productName: "",
         buyPlace: "",
@@ -85,12 +85,12 @@ export default function ItemEditorModal({ setItems }: SetItems) {
     } else {
       getOriginData();
     }
-  }, [getOriginData, isEdit, isEdit.itemId, reset]);
+  }, [getOriginData, isEdit, isEdit?.itemId, reset]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
-    if (!isEdit) {
-      axios
-        .post("http://localhost:3001/items", {
+    if (!isEdit?.isEdit) {
+      customAxios
+        .post("/items", {
           ...data,
           isSoldOut: false,
         })
@@ -99,15 +99,11 @@ export default function ItemEditorModal({ setItems }: SetItems) {
           getItem().then((res) => setItems(res));
         });
       dispatch(closeModal());
-
-      //인벤토리테이블 컴포넌트에서 이 컴포넌트를 사용한다음 props로 setState함수를 넘겨줘서 여기서 갱신해야할듯 data를 다시 불러오는 함수를 불러야함.
     } else {
-      axios
-        .patch(`http://localhost:3001/items/${isEdit.itemId}`, data)
-        .then(() => {
-          addToast({ type: "success", text: "Successfully edited!" });
-          getItem().then((res) => setItems(res));
-        });
+      customAxios.patch(`/items/${isEdit.itemId}`, data).then(() => {
+        addToast({ type: "success", text: "Successfully edited!" });
+        getItem().then((res) => setItems(res));
+      });
       dispatch(closeModal());
     }
   };
@@ -118,7 +114,7 @@ export default function ItemEditorModal({ setItems }: SetItems) {
         <form onSubmit={handleSubmit(onSubmit)}>
           <header className="flex justify-between items-center border-b-2 p-4">
             <h2 className="text-xl font-semibold">
-              {isEdit ? "Edit Item" : "Add Item"}
+              {isEdit?.isEdit ? "Edit Item" : "Add Item"}
             </h2>
             <button type="button" onClick={() => dispatch(closeModal())}>
               x
@@ -233,7 +229,7 @@ export default function ItemEditorModal({ setItems }: SetItems) {
             )}
           </section>
           <footer className="flex justify-center items-start p-3">
-            <Button>{isEdit ? "Edit Item" : "Add Item"}</Button>
+            <Button>{isEdit?.isEdit ? "Edit Item" : "Add Item"}</Button>
           </footer>
         </form>
       </ModalContainer>

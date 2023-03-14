@@ -1,7 +1,7 @@
-import axios from "axios";
+import customAxios from "./axios";
 export const getItem = async () => {
   try {
-    const response = await axios.get("http://localhost:3001/items");
+    const response = await customAxios.get("/items");
     return response.data;
   } catch (err) {
     console.log(err);
@@ -9,7 +9,7 @@ export const getItem = async () => {
 };
 export const deleteItem = (id: number) => {
   try {
-    return axios.delete(`http://localhost:3001/items/${id}`);
+    return customAxios.delete(`/items/${id}`);
   } catch (err) {
     console.log(err);
   }

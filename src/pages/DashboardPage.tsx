@@ -1,7 +1,7 @@
 import { Container } from "./InventoryPage";
 import React, { useState, useEffect } from "react";
 import { getCurMonth, getPrevMonth, getYear } from "../utils/getDate";
-import axios from "axios";
+import customAxios from "../utils/axios";
 import CompareIncome from "../components/dashboard/CompareIncome";
 import SalesChart from "../components/dashboard/SalesChart";
 import MonthlyDetailCarousel from "../components/dashboard/MonthlyDetailCarousel";
@@ -18,14 +18,14 @@ export default function DashboardPage() {
   const year = getYear(new Date());
   const prevMonth = getPrevMonth(Number(month));
   const getData = async () => {
-    const { data } = await axios.get(
-      `http://localhost:3001/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31`
+    const { data } = await customAxios.get(
+      `/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31`
     );
     setData(data);
   };
   const getPrevData = async () => {
-    const { data } = await axios.get(
-      `http://localhost:3001/items?buyDate_gte=${year}-${prevMonth}-01&buyDate_lte=${year}-${prevMonth}-31`
+    const { data } = await customAxios.get(
+      `/items?buyDate_gte=${year}-${prevMonth}-01&buyDate_lte=${year}-${prevMonth}-31`
     );
     setPrevData(data);
   };

@@ -5,7 +5,8 @@ import InventoryTable from "../components/inventory/InventoryTable";
 import ItemEditorModal from "../components/modals/ItemEditorModal";
 import useToast from "../hooks/useToast";
 import { getItem, deleteItem } from "../utils/api";
-import axios from "axios";
+import customAxios from "../utils/axios";
+import GlobalModal from "../components/modals/GlobalModal";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,7 +55,7 @@ export default function InventoryPage() {
     }
   };
   const handleCheck = async (check: boolean, id: number) => {
-    await axios.patch(`http://localhost:3001/items/${id}`, {
+    await customAxios.patch(`/items/${id}`, {
       isSoldOut: check,
     });
     setIsSoldOut(!isSoldOut);
@@ -69,7 +70,8 @@ export default function InventoryPage() {
           handleCheck={handleCheck}
         />
       </Container>
-      <ItemEditorModal setItems={setItems} />
+      {/* <ItemEditorModal setItems={setItems} /> */}
+      <GlobalModal setItems={setItems} />
     </>
   );
 }
