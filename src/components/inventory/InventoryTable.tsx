@@ -111,7 +111,13 @@ export default function InventoryTable({
                     <button
                       className="mr-1"
                       onClick={() =>
-                        dispatch(openModal({ isEdit: true, itemId: item.id }))
+                        dispatch(
+                          openModal({
+                            modalType: "ItemModal",
+                            isEdit: true,
+                            itemId: item.id,
+                          })
+                        )
                       }
                     >
                       <AiTwotoneEdit />

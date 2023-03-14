@@ -5,6 +5,7 @@ import {
   RiMoneyDollarBoxFill,
   RiStockFill,
 } from "react-icons/ri";
+import React from "react";
 export default function SideBarItems() {
   return (
     <ul className="flex flex-col justify-start items-center gap-3 h-full w-full mt-5 font-semibold">
@@ -26,12 +27,6 @@ export default function SideBarItems() {
           <RiStockFill />
         </div>
         <div>Stockx</div>
-      </Link>
-      <Link to={"expense"} className="sidebar-btn">
-        <div className="mr-1">
-          <RiMoneyDollarBoxFill />
-        </div>
-        <div>Expense</div>
       </Link>
     </ul>
   );

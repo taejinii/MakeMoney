@@ -2,6 +2,7 @@ import styled from "styled-components";
 import SideBarItems from "./SideBarItems";
 import Profile from "./Profile";
 import { Link } from "react-router-dom";
+import React from "react";
 const SideBarContainer = styled.aside`
   display: flex;
   flex-direction: column;

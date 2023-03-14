@@ -9,7 +9,10 @@ export default function InventoryHeader() {
       <div className="flex justify-between items-center w-full mb-2">
         <h1 className="text-4xl font-semibold">Inventory</h1>
         <div className="flex gap-3">
-          <Button width="100px" onClick={() => dispatch(openModal(false))}>
+          <Button
+            width="100px"
+            onClick={() => dispatch(openModal({ modalType: "ItemModal" }))}
+          >
             Add Item
           </Button>
           <Button width="100px">CSV Export</Button>

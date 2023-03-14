@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface ModalTypes {
+  modalType: string;
   isOpen: boolean;
-  isEdit: {
+  isEdit?: {
     isEdit: boolean;
     itemId: number;
   };
 }
 
 const initialState: ModalTypes = {
+  modalType: "",
   isOpen: false,
   isEdit: {
     isEdit: false,
@@ -21,6 +23,8 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, action) => {
+      const { modalType } = action.payload;
+      state.modalType = modalType;
       state.isOpen = true;
       state.isEdit = action.payload;
     },
