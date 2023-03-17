@@ -1,26 +1,22 @@
 import { useRef, useEffect } from "react";
 import { useAppDispatch } from "../store/store";
+import { closeModal } from "../store/modalSlice";
 
-interface ActionType {
-  type: string;
-  payload: undefined;
-}
-
-const useModalClose = (isOpen: boolean, closeModal: ActionType) => {
+const useModalClose = (isOpen: boolean) => {
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const modalClose = (e: MouseEvent) => {
       if (isOpen && ref.current?.contains(e.target as Node)) {
-        dispatch(closeModal);
+        dispatch(closeModal());
       }
     };
     document.addEventListener("click", modalClose);
     return () => {
       document.removeEventListener("click", modalClose);
     };
-  }, [isOpen, closeModal, dispatch]);
+  }, [isOpen, dispatch]);
   return ref;
 };
 export default useModalClose;

@@ -2,7 +2,7 @@ import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 import React from "react";
 import Button from "../Button";
-export default function InventoryHeader() {
+export default function InventoryHeader({ setItems }: any) {
   const dispatch = useAppDispatch();
   return (
     <header>

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { getItem, deleteItem } from "../utils/api";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
-import ItemEditorModal from "../components/modals/ItemEditorModal";
 import useToast from "../hooks/useToast";
-import { getItem, deleteItem } from "../utils/api";
 import customAxios from "../utils/axios";
-import GlobalModal from "../components/modals/GlobalModal";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,9 +36,9 @@ interface ItemsType {
 export default function InventoryPage() {
   const [items, setItems] = useState<ItemsType[]>([]);
   const [isSoldOut, setIsSoldOut] = useState(false);
-
   const { addToast } = useToast();
-
+  const { data } = useQuery({ queryKey: ["items"], queryFn: getItem });
+  console.log("data", data);
   useEffect(() => {
     getItem().then((res) => {
       setItems(res);
@@ -70,8 +69,6 @@ export default function InventoryPage() {
           handleCheck={handleCheck}
         />
       </Container>
-      {/* <ItemEditorModal setItems={setItems} /> */}
-      <GlobalModal setItems={setItems} />
     </>
   );
 }
