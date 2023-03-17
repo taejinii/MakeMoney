@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
 import useToast from "../../hooks/useToast";
-import { getItem } from "../../utils/api";
+// import { getItem } from "../../utils/api";
 
 interface VisibleType {
   visible: boolean;
@@ -35,6 +35,7 @@ export const ModalBackDrop = styled.div`
 export const ModalContainer = styled.div<VisibleType>`
   position: fixed;
   scale: ${(props) => (props.visible ? "1" : "0")};
+
   transition: 0.2s ease-out;
   flex-direction: column;
   width: 400px;
@@ -52,12 +53,12 @@ export const ModalContainer = styled.div<VisibleType>`
 interface SetItems {
   setItems: React.Dispatch<React.SetStateAction<any>>;
 }
-export default function ItemEditorModal({ setItems }: SetItems) {
+export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
-  console.log(isEdit);
+  console.log("isOpen", isOpen);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
-  const ref = useModalClose(isOpen, closeModal());
+  const ref = useModalClose(isOpen);
   const {
     register,
     handleSubmit,
@@ -96,14 +97,24 @@ export default function ItemEditorModal({ setItems }: SetItems) {
         })
         .then(() => {
           addToast({ type: "success", text: "Successfully saved!" });
-          getItem().then((res) => setItems(res));
+          // getItem().then((res) => setItems(res));
+        })
+        .catch((err) => {
+          addToast({ type: "error", text: "Can't Save error occured" });
+          console.log(err);
         });
       dispatch(closeModal());
     } else {
-      customAxios.patch(`/items/${isEdit.itemId}`, data).then(() => {
-        addToast({ type: "success", text: "Successfully edited!" });
-        getItem().then((res) => setItems(res));
-      });
+      customAxios
+        .patch(`/items/${isEdit.itemId}`, data)
+        .then(() => {
+          addToast({ type: "success", text: "Successfully edited!" });
+          // getItem().then((res) => setItems(res));
+        })
+        .catch((err) => {
+          addToast({ type: "error", text: "Can't Edit error occured" });
+          console.log(err);
+        });
       dispatch(closeModal());
     }
   };

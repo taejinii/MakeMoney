@@ -1,36 +1,40 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-
+import styled from "styled-components";
+import { closeModal } from "../../store/modalSlice";
+import { useAppSelector, useAppDispatch } from "../../store/store";
+import useModalClose from "../../hooks/useModalClose";
+import { ModalBackDrop } from "./ItemEditorModal";
 interface CurrencyTypes {
   currencyCode: string;
   cashBuyingPrice: number;
 }
-const slideModal = keyframes`
-  0%{
-    transform: translateX(100%);
-  }
-  100%{
-    transform: translateX(0);
-  }
-`;
-const ModalWrapper = styled.div`
+interface Visible {
+  visible: boolean;
+}
+const ModalWrapper = styled.div<Visible>`
+  display: flex;
   position: fixed;
-  border: 1px solid black;
-  right: 0px;
+  width: 450px;
   height: 100vh;
   padding: 20px;
   z-index: 999;
+  right: 0;
   background-color: white;
-  animation: ${slideModal} 0.5s ease-in-out;
-  visibility: visible;
+  transition: 0.3s;
+
+  transform: ${(props) =>
+    props.visible ? "translateY(0px)" : "translateY(380px)"};
 `;
 
 export default function ExchangeModal() {
   const currencyName = ["EUR", "USD", "GBP", "JPY"];
   const [currency, setCurrency] = useState<any>([]);
-  console.log(currency);
+  const { isOpen } = useAppSelector((state) => state.modal);
+  const ref = useModalClose(isOpen);
+  const dispatch = useAppDispatch();
+
   const exchangeRate = async () => {
     let currencyArr: string[] = [];
     for (let i = 0; i < currencyName.length; i++) {
@@ -41,20 +45,27 @@ export default function ExchangeModal() {
     }
     return setCurrency(currencyArr);
   };
+
   useEffect(() => {
+    console.log("s");
     exchangeRate();
   }, []);
 
   return (
-    <ModalWrapper>
-      {currency &&
-        currency?.map((el: CurrencyTypes, idx: number) => {
-          return (
-            <div key={idx} className="p-2">
-              {el.currencyCode}:{el.cashBuyingPrice}
-            </div>
-          );
-        })}
-    </ModalWrapper>
+    <>
+      {isOpen && <ModalBackDrop ref={ref} />}
+      {isOpen && (
+        <ModalWrapper visible={isOpen}>
+          {currency?.map((el: CurrencyTypes, idx: number) => {
+            return (
+              <div key={idx} className="p-2">
+                {el.currencyCode}:{el.cashBuyingPrice}
+              </div>
+            );
+          })}
+          <button onClick={() => dispatch(closeModal())}>x</button>
+        </ModalWrapper>
+      )}
+    </>
   );
 }

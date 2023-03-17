@@ -1,6 +1,7 @@
 import customAxios from "./axios";
 export const getItem = async () => {
   try {
+    console.log("확인");
     const response = await customAxios.get("/items");
     return response.data;
   } catch (err) {
