@@ -7,8 +7,8 @@ import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
 import useToast from "../../hooks/useToast";
-// import { getItem } from "../../utils/api";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addItem, getItem } from "../../utils/api";
 interface VisibleType {
   visible: boolean;
 }
@@ -50,21 +50,20 @@ export const ModalContainer = styled.div<VisibleType>`
   z-index: 20;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
-interface SetItems {
-  setItems: React.Dispatch<React.SetStateAction<any>>;
-}
+
 export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
-  console.log("isOpen", isOpen);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen);
+  console.log(isEdit?.itemId);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<IFormInput>();
+
   const getOriginData = useCallback(async () => {
     const result = await customAxios.get(`/items/${isEdit?.itemId}`);
     reset(result.data);
@@ -87,34 +86,54 @@ export default function ItemEditorModal() {
       getOriginData();
     }
   }, [getOriginData, isEdit, isEdit?.itemId, reset]);
-
+  const add = useMutation(
+    (data) => {
+      return addItem(data);
+    },
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(["items"]);
+      },
+    }
+  );
+  const queryClient = useQueryClient();
+  const update = useMutation(
+    (data) => {
+      return customAxios.patch(`items/${isEdit?.itemId}`, data);
+    },
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(["items"]);
+      },
+    }
+  );
   const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
     if (!isEdit?.isEdit) {
-      customAxios
-        .post("/items", {
-          ...data,
-          isSoldOut: false,
-        })
-        .then(() => {
-          addToast({ type: "success", text: "Successfully saved!" });
-          // getItem().then((res) => setItems(res));
-        })
-        .catch((err) => {
-          addToast({ type: "error", text: "Can't Save error occured" });
-          console.log(err);
-        });
+      // customAxios
+      //   .post("/items", {
+      //     ...data,
+      //     isSoldOut: false,
+      //   })
+      //   .then(() => {
+      //     addToast({ type: "success", text: "Successfully saved!" });
+      //   })
+      //   .catch((err) => {
+      //     addToast({ type: "error", text: "Can't Save error occured" });
+      //     console.log(err);
+      //   });
+      add.mutate(data);
       dispatch(closeModal());
     } else {
-      customAxios
-        .patch(`/items/${isEdit.itemId}`, data)
-        .then(() => {
-          addToast({ type: "success", text: "Successfully edited!" });
-          // getItem().then((res) => setItems(res));
-        })
-        .catch((err) => {
-          addToast({ type: "error", text: "Can't Edit error occured" });
-          console.log(err);
-        });
+      // customAxios
+      //   .patch(`/items/${isEdit.itemId}`, data)
+      //   .then(() => {
+      //     addToast({ type: "success", text: "Successfully edited!" });
+      //   })
+      //   .catch((err) => {
+      //     addToast({ type: "error", text: "Can't Edit error occured" });
+      //     console.log(err);
+      //   });
+      update.mutate(data);
       dispatch(closeModal());
     }
   };

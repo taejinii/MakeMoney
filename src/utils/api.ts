@@ -1,7 +1,6 @@
 import customAxios from "./axios";
 export const getItem = async () => {
   try {
-    console.log("확인");
     const response = await customAxios.get("/items");
     return response.data;
   } catch (err) {
@@ -11,6 +10,14 @@ export const getItem = async () => {
 export const deleteItem = (id: number) => {
   try {
     return customAxios.delete(`/items/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addItem = async (data: any) => {
+  try {
+    return await customAxios.post("/items", data);
   } catch (err) {
     console.log(err);
   }

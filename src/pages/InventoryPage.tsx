@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getItem, deleteItem } from "../utils/api";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
@@ -37,35 +37,45 @@ export default function InventoryPage() {
   const [items, setItems] = useState<ItemsType[]>([]);
   const [isSoldOut, setIsSoldOut] = useState(false);
   const { addToast } = useToast();
+  const { mutate, isLoading, isError, error, isSuccess } = useMutation(
+    (id: number) => {
+      return customAxios.delete(`/items/${id}`);
+    }
+  );
   const { data } = useQuery({ queryKey: ["items"], queryFn: getItem });
-  console.log("data", data);
+
+  console.log(data);
   useEffect(() => {
     getItem().then((res) => {
       setItems(res);
     });
   }, [isSoldOut]);
-  const deleteItemHandler = (id: number) => {
-    try {
-      deleteItem(id)?.then(() => getItem().then((res) => setItems(res)));
-      addToast({ type: "success", text: "Succefully deleted!!!" });
-    } catch (err) {
-      addToast({ type: "error", text: "Error occurred." });
-      console.log(err);
-    }
-  };
+
+  // const deleteItemHandler = (id: number) => {
+
+  //     try {
+  //         deleteItem(id)?.then(() => getItem().then((res) => setItems(res)));
+  //         addToast({ type: "success", text: "Succefully deleted!!!" });
+  //       } catch (err) {
+  //           addToast({ type: "error", text: "Error occurred." });
+  //           console.log(err);
+  //         }
+  //       };
+
   const handleCheck = async (check: boolean, id: number) => {
     await customAxios.patch(`/items/${id}`, {
       isSoldOut: check,
     });
     setIsSoldOut(!isSoldOut);
   };
+
   return (
     <>
       <Container>
         <InventoryHeader />
         <InventoryTable
-          items={items}
-          deleteItemHandler={deleteItemHandler}
+          items={data}
+          mutate={mutate}
           handleCheck={handleCheck}
         />
       </Container>

@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import customAxios from "../../utils/axios";
 
-export default function InventoryTable({
-  items,
-  deleteItemHandler,
-  handleCheck,
-}) {
+export default function InventoryTable({ items, mutate, handleCheck }) {
   // const [items, setItmes] = useState<ItemsType[]>([]);
   const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
@@ -20,7 +18,14 @@ export default function InventoryTable({
   useEffect(() => {
     getUsdRate();
   }, []);
-
+  const mutation = useMutation(
+    (id) => {
+      return customAxios.delete(`/items/${id}`);
+    },
+    {
+      onSuccess: () => {},
+    }
+  );
   const tableHeader: string[] = [
     "판매여부",
     "구매일",
@@ -122,7 +127,7 @@ export default function InventoryTable({
                     >
                       <AiTwotoneEdit />
                     </button>
-                    <button onClick={() => deleteItemHandler(item.id)}>
+                    <button onClick={() => mutation.mutate(item.id)}>
                       <AiTwotoneDelete />
                     </button>
                   </td>
