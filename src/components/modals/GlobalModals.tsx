@@ -18,7 +18,7 @@ const MODAL_COMPONENTS = [
   },
 ];
 export default function GlobalModals() {
-  const { isOpen, modalType } = useAppSelector((state) => state.modal);
+  const { modalType } = useAppSelector((state) => state.modal);
   const findModal = MODAL_COMPONENTS.find((modal) => {
     return modal.type === modalType;
   });

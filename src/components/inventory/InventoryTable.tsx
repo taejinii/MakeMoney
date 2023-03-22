@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import customAxios from "../../utils/axios";
 
-export default function InventoryTable({ items, mutate, handleCheck }) {
+export default function InventoryTable({ items, deleteItem, handleCheck }) {
   // const [items, setItmes] = useState<ItemsType[]>([]);
   const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
@@ -18,14 +18,7 @@ export default function InventoryTable({ items, mutate, handleCheck }) {
   useEffect(() => {
     getUsdRate();
   }, []);
-  const mutation = useMutation(
-    (id) => {
-      return customAxios.delete(`/items/${id}`);
-    },
-    {
-      onSuccess: () => {},
-    }
-  );
+
   const tableHeader: string[] = [
     "판매여부",
     "구매일",
@@ -127,7 +120,7 @@ export default function InventoryTable({ items, mutate, handleCheck }) {
                     >
                       <AiTwotoneEdit />
                     </button>
-                    <button onClick={() => mutation.mutate(item.id)}>
+                    <button onClick={() => deleteItem(item.id)}>
                       <AiTwotoneDelete />
                     </button>
                   </td>

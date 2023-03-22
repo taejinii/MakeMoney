@@ -8,7 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
 import useToast from "../../hooks/useToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addItem, getItem } from "../../utils/api";
+import { addItem } from "../../utils/api";
 interface VisibleType {
   visible: boolean;
 }
@@ -28,6 +28,13 @@ export const ModalBackDrop = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   width: 100vw;
   height: 100vh;
 `;
@@ -86,53 +93,38 @@ export default function ItemEditorModal() {
       getOriginData();
     }
   }, [getOriginData, isEdit, isEdit?.itemId, reset]);
+  const queryClient = useQueryClient();
   const add = useMutation(
     (data) => {
       return addItem(data);
     },
     {
-      onSettled: () => {
+      onSuccess: () => {
+        addToast({ type: "success", text: "Successfully saved!" });
         queryClient.invalidateQueries(["items"]);
+      },
+      onError: () => {
+        addToast({ type: "error", text: "An unexpected error occured" });
       },
     }
   );
-  const queryClient = useQueryClient();
   const update = useMutation(
     (data) => {
       return customAxios.patch(`items/${isEdit?.itemId}`, data);
     },
     {
-      onSettled: () => {
+      onSuccess: () => {
+        addToast({ type: "success", text: "Successfully edited!" });
         queryClient.invalidateQueries(["items"]);
       },
     }
   );
   const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
     if (!isEdit?.isEdit) {
-      // customAxios
-      //   .post("/items", {
-      //     ...data,
-      //     isSoldOut: false,
-      //   })
-      //   .then(() => {
-      //     addToast({ type: "success", text: "Successfully saved!" });
-      //   })
-      //   .catch((err) => {
-      //     addToast({ type: "error", text: "Can't Save error occured" });
-      //     console.log(err);
-      //   });
       add.mutate(data);
+
       dispatch(closeModal());
     } else {
-      // customAxios
-      //   .patch(`/items/${isEdit.itemId}`, data)
-      //   .then(() => {
-      //     addToast({ type: "success", text: "Successfully edited!" });
-      //   })
-      //   .catch((err) => {
-      //     addToast({ type: "error", text: "Can't Edit error occured" });
-      //     console.log(err);
-      //   });
       update.mutate(data);
       dispatch(closeModal());
     }

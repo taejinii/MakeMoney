@@ -19,6 +19,7 @@ const ToastWrapper = styled.div`
 
 export default function Toast() {
   const { toasts } = useAppSelector((state) => state.toast);
+  console.log("toasts", toasts);
   const { deleteToast } = useToast();
   console.log(toasts);
   return (

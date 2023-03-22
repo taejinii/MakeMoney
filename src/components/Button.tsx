@@ -5,6 +5,7 @@ interface ButtonTypes {
 }
 const StyledButton = styled.button<ButtonTypes>`
   background-color: #3969fb;
+  margin: 0 auto;
   color: white;
   padding: 6px;
   border-radius: 4px;
