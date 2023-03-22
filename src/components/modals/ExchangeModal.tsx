@@ -23,8 +23,9 @@ const ModalWrapper = styled.div<Visible>`
   display: flex;
   position: fixed;
   flex-direction: column;
-  width: 300px;
+  width: 350px;
   height: 100vh;
+  padding: 20px;
   z-index: 20;
   right: 0;
   gap: 20px;
@@ -73,7 +74,7 @@ export default function ExchangeModal() {
           <span>{today}</span>
         </header>
         {currency?.map((el: CurrencyTypes) => {
-          const contury = () => {
+          const conturyImage = () => {
             if (el.currencyCode === "EUR") {
               return "images/euro.png";
             } else if (el.currencyCode === "USD") {
@@ -86,10 +87,13 @@ export default function ExchangeModal() {
           };
 
           return (
-            <div key={el.id} className="flex justify-center items-center p-4 ">
+            <div
+              key={el.id}
+              className="flex justify-center items-center p-4 rounded-xl shadow-xl border-2"
+            >
               <img
                 alt="flag"
-                src={contury()}
+                src={conturyImage()}
                 className="w-8 h-8 rounded-full mr-2"
               />
               <div>

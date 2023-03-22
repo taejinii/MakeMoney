@@ -30,10 +30,13 @@ ChartJS.register(
   Filler,
   Legend
 );
-export default function SalesChart({ data, month }: any) {
-  const buyDate = data.map((el: any) => el.buyDate);
+interface SalesType {
+  buyDate: string;
+}
+export default function SalesChart({ data, month }) {
+  const buyDate: string[] = data.map((el: SalesType) => el.buyDate);
   const labels = Array.from(new Set(buyDate.sort()));
-  const dailyBuyCount = buyDate.reduce((acc: any, cur: any) => {
+  const dailyBuyCount = buyDate.reduce((acc, cur) => {
     if (acc[cur]) {
       acc[cur] += 1;
     } else {
