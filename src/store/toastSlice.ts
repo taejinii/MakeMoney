@@ -10,6 +10,7 @@ const toastSlice = createSlice({
   reducers: {
     addToast: (state: any, action: any) => {
       state.toasts.push(action.payload);
+      console.log(state.toasts);
     },
     removeToast: (state: any, action) => {
       state.toasts = state.toasts.filter((toast) => {
