@@ -54,11 +54,14 @@ export default function DashboardPage() {
     setMonth(e.target.value);
   };
   return (
-    <Container className="gap-5">
+    <Container className="gap-5 dark:bg-[#363a44]">
       <select
         onChange={onMonth}
-        className="gap-5  w-20 rounded-xl shadow-xl border-2 border-black"
+        className="gap-5  w-40 rounded-xl shadow-xl border-2 border-black font-bold"
       >
+        <option value="" selected disabled hidden>
+          Choose Month
+        </option>
         {selectList.map((el) => {
           return <option key={el.id}>{el.month}</option>;
         })}

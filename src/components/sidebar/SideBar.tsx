@@ -25,7 +25,7 @@ const SideBarMenu = styled.nav`
 `;
 export default function SideBar() {
   return (
-    <SideBarContainer>
+    <SideBarContainer className="dark:bg-[#363a44] dark:text-white">
       <ProfileWrapper>
         <Link to={"/"} className="font-bold text-xl">
           MakeMoney

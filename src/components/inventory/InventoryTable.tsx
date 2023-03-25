@@ -40,7 +40,7 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
       {items && items.length !== 0 ? (
         <table>
           <thead>
-            <tr className="whitespace-nowrap border-b-2 sticky -top-10 bg-white">
+            <tr className="whitespace-nowrap border-b-2 sticky -top-10  ">
               {tableHeader.map((header, index) => {
                 return (
                   <th key={index} className="py-3">
@@ -59,7 +59,7 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
               const netProfit = item.sellPrice - totalPrice;
               return (
                 <tr
-                  className="text-center whitespace-nowrap font-semibold hover:bg-opacity-10 hover:bg-black"
+                  className="text-center whitespace-nowrap font-semibold hover:bg-opacity-10 hover:bg-black dark:hover:bg-white dark:hover:bg-opacity-20"
                   key={item.id}
                 >
                   <td className="p-3">
@@ -93,9 +93,7 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
                   <td className="text-red-600">
                     -{totalPrice.toLocaleString()}
                   </td>
-                  <td className="text-black">
-                    {Number(item.sellPrice).toLocaleString()}
-                  </td>
+                  <td>{Number(item.sellPrice).toLocaleString()}</td>
 
                   <td
                     className={
