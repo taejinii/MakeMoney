@@ -23,8 +23,9 @@ const ModalWrapper = styled.div<Visible>`
   display: flex;
   position: fixed;
   flex-direction: column;
-  width: 300px;
+  width: 350px;
   height: 100vh;
+  padding: 20px;
   z-index: 20;
   right: 0;
   gap: 20px;
@@ -42,7 +43,6 @@ export default function ExchangeModal() {
   const { isOpen } = useAppSelector((state) => state.modal);
   const ref = useModalClose(isOpen);
   const dispatch = useAppDispatch();
-  console.log(isOpen);
   const exchangeRate = async () => {
     let currencyArr: string[] = [];
     for (let i = 0; i < currencyName.length; i++) {
@@ -58,7 +58,6 @@ export default function ExchangeModal() {
     exchangeRate();
   }, []);
 
-  console.log(currency);
   const today = `${new Date().getFullYear()}/${
     new Date().getMonth() + 1
   }/${new Date().getDate()}`;
@@ -66,14 +65,17 @@ export default function ExchangeModal() {
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
 
-      <ModalWrapper visible={isOpen}>
-        <header className="p-4 border-b-2 text-center font-mono font-bold text-xl">
+      <ModalWrapper
+        visible={isOpen}
+        className="dark:bg-[#363a44] dark:text-white"
+      >
+        <header className="p-4 border-b-2 text-center font-mono font-bold text-xl ">
           <span>Today's exchange rate</span>
           <br />
           <span>{today}</span>
         </header>
         {currency?.map((el: CurrencyTypes) => {
-          const contury = () => {
+          const conturyImage = () => {
             if (el.currencyCode === "EUR") {
               return "images/euro.png";
             } else if (el.currencyCode === "USD") {
@@ -86,31 +88,36 @@ export default function ExchangeModal() {
           };
 
           return (
-            <div key={el.id} className="flex justify-center items-center p-4 ">
+            <div
+              key={el.id}
+              className="flex justify-center items-center p-4 rounded-xl shadow-xl hover:scale-105 transition-all  bg-[#f0efef] dark:bg-[#272b34]"
+            >
               <img
                 alt="flag"
-                src={contury()}
+                src={conturyImage()}
                 className="w-8 h-8 rounded-full mr-2"
               />
               <div>
-                <span className="font-bold">
-                  {el.name} : {el.cashBuyingPrice}
+                <span className="font-bold ">
+                  {el.name} : {el.cashBuyingPrice}원
                 </span>
-                <span className="flex justify-center items-center">
-                  {el.signedChangePrice}
+                <span className="flex justify-center items-center ">
+                  {el.signedChangePrice}원
                   {el.change === "RISE" ? (
-                    <AiOutlineRise color="green" fontSize={24} />
+                    <div className="flex font-bold text-emerald-800">
+                      <AiOutlineRise color="green" fontSize={24} /> 상승
+                    </div>
                   ) : (
-                    <AiOutlineFall color="red" fontSize={24} />
+                    <div className="flex font-bold text-red-700">
+                      <AiOutlineFall color="red" fontSize={24} /> 하락
+                    </div>
                   )}
                 </span>
               </div>
             </div>
           );
         })}
-        <Button onClick={() => dispatch(closeModal())} width={"250px"}>
-          Close
-        </Button>
+        <Button onClick={() => dispatch(closeModal())}>Close</Button>
       </ModalWrapper>
     </>
   );

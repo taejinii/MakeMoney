@@ -27,7 +27,7 @@ interface IFormInput {
 export const ModalBackDrop = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 20;
   top: 0;
   left: 0;
   right: 0;
@@ -132,7 +132,10 @@ export default function ItemEditorModal() {
   return (
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
-      <ModalContainer visible={isOpen}>
+      <ModalContainer
+        visible={isOpen}
+        className="dark:bg-[#363a44] dark:text-white font-semibold"
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           <header className="flex justify-between items-center border-b-2 p-4">
             <h2 className="text-xl font-semibold">

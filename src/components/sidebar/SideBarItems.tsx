@@ -2,12 +2,9 @@ import { Link } from "react-router-dom";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
-import {
-  RiDropboxFill,
-  RiMoneyDollarBoxFill,
-  RiStockFill,
-} from "react-icons/ri";
+import { RiDropboxFill, RiStockFill } from "react-icons/ri";
 import React from "react";
+import DarkMode from "./DarkMode";
 export default function SideBarItems() {
   const dispatch = useAppDispatch();
   return (
@@ -36,6 +33,7 @@ export default function SideBarItems() {
       >
         <div>Exchange</div>
       </button>
+      <DarkMode />
     </ul>
   );
 }

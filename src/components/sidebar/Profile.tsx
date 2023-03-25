@@ -1,3 +1,4 @@
+import React from "react";
 import profileImage from "../../내사진.jpeg";
 export default function Profile() {
   const userName = "Taejin";
