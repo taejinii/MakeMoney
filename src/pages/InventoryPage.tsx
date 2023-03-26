@@ -35,14 +35,16 @@ export default function InventoryPage() {
     });
     setIsSoldOut(!isSoldOut);
   };
-  const { data } = useQuery({ queryKey: ["items"], queryFn: getItem });
-
+  const { data } = useQuery({
+    queryKey: ["items"],
+    queryFn: getItem,
+  });
   return (
     <>
       <Container className="dark:bg-[#363a44] dark:text-white">
         <InventoryHeader data={data} />
         <InventoryTable
-          items={data}
+          // items={data}
           deleteItem={mutate}
           handleCheck={handleCheck}
         />

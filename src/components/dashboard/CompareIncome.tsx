@@ -1,6 +1,5 @@
 import React from "react";
 import useCalculate from "../../hooks/useCalculate";
-
 export default function CompareIncome({ data, month, prevData }: any) {
   const krwPrice = useCalculate(data, "price") * 1317;
   const duty = krwPrice * 0.25;

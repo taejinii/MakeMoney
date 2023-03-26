@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getItem } from "../../utils/api";
 import axios from "axios";
-import customAxios from "../../utils/axios";
 
-export default function InventoryTable({ items, deleteItem, handleCheck }) {
-  // const [items, setItmes] = useState<ItemsType[]>([]);
+export interface ItemTypes {
+  buyDate: string;
+  buyPlace: string;
+  id: number;
+  isSoldOut: boolean;
+  productName: string;
+  quantity: number;
+  sellPrice: number;
+  shipExpense: number;
+  size: string;
+  price: number;
+}
+
+export default function InventoryTable({ deleteItem, handleCheck }) {
   const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
 
@@ -18,7 +30,14 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
   useEffect(() => {
     getUsdRate();
   }, []);
-
+  const {
+    data: items,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["items"],
+    queryFn: getItem,
+  });
   const tableHeader: string[] = [
     "판매여부",
     "구매일",
@@ -35,6 +54,11 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
     "순이익",
     "",
   ];
+
+  console.log(items);
+  if (isLoading) {
+    return <div>...loading</div>;
+  }
   return (
     <>
       {items && items.length !== 0 ? (
@@ -51,11 +75,11 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => {
+            {items.map((item: ItemTypes) => {
               const krwPrice =
                 item.quantity * (item.price * Math.round(usdRate));
               const duty = krwPrice * 0.25;
-              const totalPrice = krwPrice + duty + Number(item.shipExpense);
+              const totalPrice = krwPrice + duty + item.shipExpense;
               const netProfit = item.sellPrice - totalPrice;
               return (
                 <tr
@@ -93,7 +117,7 @@ export default function InventoryTable({ items, deleteItem, handleCheck }) {
                   <td className="text-red-600">
                     -{totalPrice.toLocaleString()}
                   </td>
-                  <td>{Number(item.sellPrice).toLocaleString()}</td>
+                  <td>{item.sellPrice.toLocaleString()}</td>
 
                   <td
                     className={
