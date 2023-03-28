@@ -8,6 +8,7 @@ const rotation = keyframes`
         transform: rotate(360deg);
     }
 `;
+const isDark = localStorage.getItem("theme") === "dark";
 const Spinner = styled.span`
   position: fixed;
   margin: 0 auto;
@@ -17,7 +18,7 @@ const Spinner = styled.span`
   top: 50%;
   width: 96px;
   height: 96px;
-  border: 5px solid #fff;
+  border: 5px solid ${isDark ? "#fff" : "#000000"};
   border-bottom-color: transparent;
   border-radius: 50%;
   box-sizing: border-box;
