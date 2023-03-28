@@ -13,7 +13,7 @@ export default function MonthlyDetailCarousel({ data }) {
     (el: { isSoldOut: boolean }) => el.isSoldOut === true
   );
   const cost = data
-    .map((el: { shipExpense: number | string }) => Number(el.shipExpense))
+    .map((el: { shipExpense: number | string }) => el.shipExpense)
     .reduce((prev: number, curr: number) => prev + curr, 0);
 
   const arr: EditData[] = [

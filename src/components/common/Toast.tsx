@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppSelector } from "../store/store";
-import useToast from "../hooks/useToast";
+import { useAppSelector } from "../../store/store";
+import useToast from "../../hooks/useToast";
 interface ToastTypes {
   id: string;
   text: string;
@@ -19,9 +19,7 @@ const ToastWrapper = styled.div`
 
 export default function Toast() {
   const { toasts } = useAppSelector((state) => state.toast);
-  console.log("toasts", toasts);
   const { deleteToast } = useToast();
-  console.log(toasts);
   return (
     <ToastWrapper>
       {toasts.map((toast: ToastTypes) => {

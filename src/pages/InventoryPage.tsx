@@ -5,6 +5,11 @@ import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
 import customAxios from "../utils/axios";
+
+interface SoldoutTypes {
+  check: boolean;
+  id: number;
+}
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,7 +24,13 @@ export const Container = styled.div`
 export default function InventoryPage() {
   const [isSoldOut, setIsSoldOut] = useState(false);
   const queryClient = useQueryClient();
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(
+  const {
+    mutate: deleteItem,
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+  } = useMutation(
     (id: number) => {
       return customAxios.delete(`/items/${id}`);
     },
@@ -29,22 +40,33 @@ export default function InventoryPage() {
       },
     }
   );
-  const handleCheck = async (check: boolean, id: number) => {
-    await customAxios.patch(`/items/${id}`, {
-      isSoldOut: check,
-    });
-    setIsSoldOut(!isSoldOut);
-  };
-  const { data } = useQuery({ queryKey: ["items"], queryFn: getItem });
+  const { mutate: checkSoldout } = useMutation(
+    async ({ check, id }: SoldoutTypes) => {
+      console.log(id);
+      return await customAxios.patch(`items/${id}`, {
+        isSoldOut: check,
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["items"]);
+        setIsSoldOut(!isSoldOut);
+      },
+    }
+  );
 
+  const { data } = useQuery({
+    queryKey: ["items"],
+    queryFn: getItem,
+  });
   return (
     <>
       <Container className="dark:bg-[#363a44] dark:text-white">
         <InventoryHeader data={data} />
         <InventoryTable
-          items={data}
-          deleteItem={mutate}
-          handleCheck={handleCheck}
+          // items={data}
+          deleteItem={deleteItem}
+          handleCheck={checkSoldout}
         />
       </Container>
     </>

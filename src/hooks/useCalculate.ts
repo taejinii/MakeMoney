@@ -1,7 +1,7 @@
-export default function useCalculate(data: any, item: string) {
-  console.log("d", data);
+import { ItemTypes } from "../components/inventory/InventoryTable";
+export default function useCalculate(data: [], item: string) {
   const calculatedData = data
-    .map((el: { item: string }) => Number(el[item]))
+    .map((el: ItemTypes) => el[item])
     .reduce((prev: number, curr: number) => prev + curr, 0);
 
   return calculatedData;

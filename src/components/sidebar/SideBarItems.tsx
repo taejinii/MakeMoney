@@ -29,6 +29,7 @@ export default function SideBarItems() {
         <div>Stockx</div>
       </Link>
       <button
+        className="sidebar-btn"
         onClick={() => dispatch(openModal({ modalType: "ExchangeModal" }))}
       >
         <div>Exchange</div>

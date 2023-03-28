@@ -2,7 +2,7 @@ import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 import { CSVLink } from "react-csv";
 import React from "react";
-import Button from "../Button";
+import Button from "../common/Button";
 export default function InventoryHeader({ data = [] }) {
   const dispatch = useAppDispatch();
   const headers = [

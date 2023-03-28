@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import customAxios from "../../utils/axios";
 import useModalClose from "../../hooks/useModalClose";
-import Button from "../Button";
+import Button from "../common/Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -119,7 +119,9 @@ export default function ItemEditorModal() {
       },
     }
   );
+  console.log(errors);
   const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
+    console.log(data);
     if (!isEdit?.isEdit) {
       add.mutate(data);
 
@@ -196,14 +198,14 @@ export default function ItemEditorModal() {
                   id="quantity"
                   {...register("quantity", {
                     required: "정확한 수량을 입력 해주세요.",
-                    pattern: {
-                      value: /^[0-9.]*$/,
-                      message: "숫자를 입력해주세요",
-                    },
+                    valueAsNumber: true,
+                    validate: (value) => value > 0,
                   })}
                 />
                 {errors.quantity && (
-                  <div className="error-msg">{errors.quantity.message}</div>
+                  <div className="error-msg">
+                    최소 1개이상 숫자로 입력해주세요.
+                  </div>
                 )}
               </div>
             </div>
@@ -213,14 +215,12 @@ export default function ItemEditorModal() {
               id="price"
               {...register("price", {
                 required: "구매금액을 입력 해주세요.",
-                pattern: {
-                  value: /^[0-9.]*$/,
-                  message: "숫자를 입력해주세요",
-                },
+                valueAsNumber: true,
+                validate: (value) => value >= 0,
               })}
             />
             {errors.price && (
-              <div className="error-msg">{errors.price.message}</div>
+              <div className="error-msg">다시 입력해주세요.</div>
             )}
             <label htmlFor="shipExpense">배대지 비용</label>
             <input
@@ -228,14 +228,12 @@ export default function ItemEditorModal() {
               id="shipExpense"
               defaultValue={0}
               {...register("shipExpense", {
-                pattern: {
-                  value: /^[0-9.]*$/,
-                  message: "숫자를 입력해주세요",
-                },
+                valueAsNumber: true,
+                validate: (value) => value >= 0,
               })}
             />
             {errors.shipExpense && (
-              <div className="error-msg">{errors.shipExpense.message}</div>
+              <div className="error-msg">다시 입력해주세요.</div>
             )}
             <label htmlFor="sellPrice">판매 가격</label>
             <input
@@ -243,14 +241,12 @@ export default function ItemEditorModal() {
               id="sellPrice"
               defaultValue={0}
               {...register("sellPrice", {
-                pattern: {
-                  value: /^[0-9.]*$/,
-                  message: "숫자를 입력해주세요",
-                },
+                valueAsNumber: true,
+                validate: (value) => value >= 0,
               })}
             />
             {errors.sellPrice && (
-              <div className="error-msg">{errors.sellPrice.message}</div>
+              <div className="error-msg">다시 입력해주세요.</div>
             )}
           </section>
           <footer className="flex justify-center items-start p-3">

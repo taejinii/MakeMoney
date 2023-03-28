@@ -1,6 +1,5 @@
 import React from "react";
 import useCalculate from "../../hooks/useCalculate";
-
 export default function CompareIncome({ data, month, prevData }: any) {
   const krwPrice = useCalculate(data, "price") * 1317;
   const duty = krwPrice * 0.25;
@@ -32,7 +31,7 @@ export default function CompareIncome({ data, month, prevData }: any) {
     }
   };
   return (
-    <div className="flex flex-col  items-stretch p-4 rounded-2xl shadow-2xl bg-[#101322] text-white font-bold">
+    <div className="flex flex-col w-1/4 p-4 rounded-2xl shadow-2xl bg-[#101322] text-white font-bold">
       <header>
         <h1 className="text-2xl  p-4">{month}월 Preview</h1>
       </header>
