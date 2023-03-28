@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import useModalClose from "../../hooks/useModalClose";
-import Button from "../Button";
+import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";

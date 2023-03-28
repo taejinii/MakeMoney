@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import SideBar from "./sidebar/SideBar";
 import Toast from "./Toast";
+import SideBar from "../sidebar/SideBar";
 export default function Layout() {
   return (
     <div className="flex">

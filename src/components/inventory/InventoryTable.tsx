@@ -4,8 +4,9 @@ import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
 import { getItem } from "../../utils/api";
+import styled from "styled-components";
 import axios from "axios";
-
+import LoadingSpinner from "../common/LoadingSpinner";
 export interface ItemTypes {
   buyDate: string;
   buyPlace: string;
@@ -19,6 +20,21 @@ export interface ItemTypes {
   price: number;
 }
 
+const BodyTr = styled.tr`
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  &:hover {
+    background: rgba(109, 110, 109, 0.3);
+  }
+`;
+const HeadTr = styled.tr`
+  white-space: nowrap;
+  border-bottom: solid 2px gray;
+  position: static;
+  top: -40px;
+`;
+
 export default function InventoryTable({ deleteItem, handleCheck }) {
   const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
@@ -30,11 +46,8 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
   useEffect(() => {
     getUsdRate();
   }, []);
-  const {
-    data: items,
-    isLoading,
-    isFetching,
-  } = useQuery({
+
+  const { data: items, isLoading } = useQuery({
     queryKey: ["items"],
     queryFn: getItem,
   });
@@ -55,16 +68,16 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
     "",
   ];
 
-  console.log(items);
   if (isLoading) {
-    return <div>...loading</div>;
+    return <LoadingSpinner />;
   }
+
   return (
     <>
       {items && items.length !== 0 ? (
         <table>
           <thead>
-            <tr className="whitespace-nowrap border-b-2 sticky -top-10  ">
+            <HeadTr>
               {tableHeader.map((header, index) => {
                 return (
                   <th key={index} className="py-3">
@@ -72,7 +85,7 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
                   </th>
                 );
               })}
-            </tr>
+            </HeadTr>
           </thead>
           <tbody>
             {items.map((item: ItemTypes) => {
@@ -82,15 +95,17 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
               const totalPrice = krwPrice + duty + item.shipExpense;
               const netProfit = item.sellPrice - totalPrice;
               return (
-                <tr
-                  className="text-center whitespace-nowrap font-semibold hover:bg-opacity-10 hover:bg-black dark:hover:bg-white dark:hover:bg-opacity-20"
+                <BodyTr
+                  className="dark:hover:bg-white dark:hover:bg-opacity-20"
                   key={item.id}
                 >
                   <td className="p-3">
                     <input
                       type="checkbox"
                       checked={item.isSoldOut}
-                      onChange={(e) => handleCheck(e.target.checked, item.id)}
+                      onChange={(e) =>
+                        handleCheck({ check: e.target.checked, id: item.id })
+                      }
                     />
                   </td>
                   <td>{item.buyDate}</td>
@@ -146,7 +161,7 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
                       <AiTwotoneDelete />
                     </button>
                   </td>
-                </tr>
+                </BodyTr>
               );
             })}
           </tbody>

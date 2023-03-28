@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import customAxios from "../../utils/axios";
 import useModalClose from "../../hooks/useModalClose";
-import Button from "../Button";
+import Button from "../common/Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
