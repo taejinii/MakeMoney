@@ -12,7 +12,7 @@ const SIGNUP_FRAME = {
 };
 
 export default function LoginAndSignupPage() {
-  const [isUser, setIsUser] = useState(true);
+  const [isUser, setIsUser] = useState(false);
   const { pathname } = useLocation();
 
   const userHandler = useCallback(() => {
