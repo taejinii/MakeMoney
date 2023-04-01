@@ -24,13 +24,7 @@ export const Container = styled.div`
 export default function InventoryPage() {
   const [isSoldOut, setIsSoldOut] = useState(false);
   const queryClient = useQueryClient();
-  const {
-    mutate: deleteItem,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useMutation(
+  const { mutate: deleteItem } = useMutation(
     (id: number) => {
       return customAxios.delete(`/items/${id}`);
     },

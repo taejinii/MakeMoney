@@ -12,14 +12,15 @@ const losinSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    login: (state) => {
+    loginAction: (state) => {
       state.isLogin = true;
     },
-    logout: (state) => {
+    logoutAction: (state) => {
       state.isLogin = false;
+      localStorage.clear();
     },
   },
 });
 
-export const { login, logout } = losinSlice.actions;
+export const { loginAction, logoutAction } = losinSlice.actions;
 export default losinSlice.reducer;

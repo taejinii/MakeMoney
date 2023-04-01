@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { login, signup } from "../../utils/api";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/store";
+import { loginAction } from "../../store/loginSlice";
+
 interface UserTypes {
   isUser: boolean;
   frame: {
@@ -51,6 +55,8 @@ const Label = styled.label`
   flex-direction: column;
 `;
 export default function LoginAndSignup({ isUser, frame }: UserTypes) {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -58,7 +64,10 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
   } = useForm();
   const onSubmit = (data) => {
     if (isUser) {
-      login(data);
+      login(data).then(() => {
+        dispatch(loginAction());
+        navigate("/inventory");
+      });
     } else {
       signup(data);
       console.log("signup");
