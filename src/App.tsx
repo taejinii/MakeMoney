@@ -3,6 +3,7 @@ import Layout from "./components/common/Layout";
 import InventoryPage from "./pages/InventoryPage";
 import DashboardPage from "./pages/DashboardPage";
 import StockxPage from "./pages/StockxPage";
+import LoginAndSignupPage from "./pages/LoginAndSignupPage";
 import React from "react";
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="stockx" element={<StockxPage />} />
         </Route>
+        <Route path="login" element={<LoginAndSignupPage />} />
+        <Route path="signup" element={<LoginAndSignupPage />} />
       </Routes>
     </BrowserRouter>
   );

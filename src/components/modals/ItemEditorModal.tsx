@@ -63,7 +63,6 @@ export default function ItemEditorModal() {
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen);
-  console.log(isEdit?.itemId);
   const {
     register,
     handleSubmit,
@@ -119,12 +118,9 @@ export default function ItemEditorModal() {
       },
     }
   );
-  console.log(errors);
   const onSubmit: SubmitHandler<IFormInput> = (data: any) => {
-    console.log(data);
     if (!isEdit?.isEdit) {
       add.mutate(data);
-
       dispatch(closeModal());
     } else {
       update.mutate(data);

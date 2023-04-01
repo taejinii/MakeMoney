@@ -1,7 +1,8 @@
 import React from "react";
 import profileImage from "../../내사진.jpeg";
+
 export default function Profile() {
-  const userName = "Taejin";
+  const userName = localStorage.getItem("USER_NAME");
   return (
     <>
       <div className="w-20 h-20 ">
@@ -11,7 +12,7 @@ export default function Profile() {
           className="w-full h-full rounded-full"
         />
       </div>
-      <div className="font-semibold text-lg">Hello!! {userName}</div>
+      <div className="font-semibold text-lg">{userName}</div>
     </>
   );
 }

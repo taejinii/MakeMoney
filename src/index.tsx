@@ -8,7 +8,13 @@ import React from "react";
 import App from "./App";
 import store from "./store/store";
 import GlobalModals from "./components/modals/GlobalModals";
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

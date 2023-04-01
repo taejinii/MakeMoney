@@ -67,7 +67,7 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
     "순이익",
     "",
   ];
-
+  console.log(items);
   if (isLoading) {
     return <LoadingSpinner />;
   }

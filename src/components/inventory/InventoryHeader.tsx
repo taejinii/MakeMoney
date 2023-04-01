@@ -1,10 +1,15 @@
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 import { CSVLink } from "react-csv";
+import { logoutAction } from "../../store/loginSlice";
+
 import React from "react";
 import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
 export default function InventoryHeader({ data = [] }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { isLogin } = useAppSelector((state) => state.login);
   const headers = [
     { label: "구매일", key: "buyDate" },
     { label: "구매처", key: "buyPlace" },
@@ -19,7 +24,31 @@ export default function InventoryHeader({ data = [] }) {
     { label: "판매가격", key: "sellPrice" },
     { label: "순이익", key: "productName" },
   ];
-  console.log(data); // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
+  // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
+  const logoutHandler = () => {
+    if (!isLogin) {
+      navigate("/login");
+    }
+    if (isLogin) {
+      if (window.confirm("정말 로그아웃 하시겠습니까?")) {
+        dispatch(logoutAction());
+        window.location.reload();
+      }
+    }
+  };
+  const fileDownloadHandler = () => {
+    if (window.confirm("파일을 다운로드 받으시겠습니까?")) {
+      if (data.length === 0) {
+        alert("다운로드할 데이터가 없습니다.");
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+  console.log(isLogin);
   return (
     <header>
       <div className="flex justify-between items-center w-full mb-2 ">
@@ -35,18 +64,15 @@ export default function InventoryHeader({ data = [] }) {
               headers={headers}
               data={data}
               filename={`${new Date().getFullYear()} data`}
-              onClick={() => {
-                if (window.confirm("파일을 다운로드 받으시겠습니까?")) {
-                  return true;
-                } else {
-                  return false;
-                }
-              }}
+              onClick={fileDownloadHandler}
             >
               CSV Download
             </CSVLink>
           </Button>
           {/* <Button>CSV Import</Button> */}
+          <Button onClick={logoutHandler}>
+            {isLogin ? "Logout" : "Login"}
+          </Button>
         </div>
       </div>
       <p className="font-semibold">
