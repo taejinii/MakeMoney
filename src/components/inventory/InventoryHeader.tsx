@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 import { CSVLink } from "react-csv";
 import { logoutAction } from "../../store/loginSlice";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function InventoryHeader({ data = [] }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLogin } = useAppSelector((state) => state.login);
+  const userId = localStorage.getItem("USER_ID");
   const headers = [
     { label: "구매일", key: "buyDate" },
     { label: "구매처", key: "buyPlace" },
@@ -26,10 +26,10 @@ export default function InventoryHeader({ data = [] }) {
   ];
   // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
   const logoutHandler = () => {
-    if (!isLogin) {
+    if (!userId) {
       navigate("/login");
     }
-    if (isLogin) {
+    if (userId) {
       if (window.confirm("정말 로그아웃 하시겠습니까?")) {
         dispatch(logoutAction());
         window.location.reload();
@@ -48,7 +48,6 @@ export default function InventoryHeader({ data = [] }) {
       return false;
     }
   };
-  console.log(isLogin);
   return (
     <header>
       <div className="flex justify-between items-center w-full mb-2 ">
@@ -70,9 +69,7 @@ export default function InventoryHeader({ data = [] }) {
             </CSVLink>
           </Button>
           {/* <Button>CSV Import</Button> */}
-          <Button onClick={logoutHandler}>
-            {isLogin ? "Logout" : "Login"}
-          </Button>
+          <Button onClick={logoutHandler}>{userId ? "Logout" : "Login"}</Button>
         </div>
       </div>
       <p className="font-semibold">

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
 import { getItem } from "../../utils/api";
 import styled from "styled-components";
-import axios from "axios";
 import LoadingSpinner from "../common/LoadingSpinner";
+import useUsdRate from "../../hooks/useUsdRate";
 export interface ItemTypes {
   buyDate: string;
   buyPlace: string;
@@ -36,17 +36,8 @@ const HeadTr = styled.tr`
 `;
 
 export default function InventoryTable({ deleteItem, handleCheck }) {
-  const [usdRate, setUsdRate] = useState<number>(0);
   const dispatch = useAppDispatch();
-
-  const getUsdRate = async () => {
-    const reponse = await axios.get(process.env.REACT_APP_USD);
-    setUsdRate(reponse.data.conversion_rates.KRW);
-  };
-  useEffect(() => {
-    getUsdRate();
-  }, []);
-
+  const usdRate = useUsdRate();
   const { data: items, isLoading } = useQuery({
     queryKey: ["items"],
     queryFn: getItem,

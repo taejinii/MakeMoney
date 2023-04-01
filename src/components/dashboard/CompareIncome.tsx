@@ -1,13 +1,16 @@
 import React from "react";
 import useCalculate from "../../hooks/useCalculate";
+import useUsdRate from "../../hooks/useUsdRate";
 export default function CompareIncome({ data, month, prevData }: any) {
-  const krwPrice = useCalculate(data, "price") * 1317;
+  const usdRate = useUsdRate();
+
+  const krwPrice = useCalculate(data, "price") * usdRate;
   const duty = krwPrice * 0.25;
   const sales = useCalculate(data, "sellPrice");
   const spending = krwPrice + useCalculate(data, "shipExpense") + duty;
   const prevSales = useCalculate(prevData, "sellPrice");
   const prevSpending =
-    useCalculate(prevData, "price") * 1317 +
+    useCalculate(prevData, "price") * usdRate +
     useCalculate(prevData, "shipExpense");
 
   const salesRate = Math.round(((sales - prevSales) / prevSales) * 100);

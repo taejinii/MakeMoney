@@ -64,10 +64,13 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
   } = useForm();
   const onSubmit = (data) => {
     if (isUser) {
-      login(data).then(() => {
-        dispatch(loginAction());
-        navigate("/inventory");
-      });
+      login(data)
+        .then(() => {
+          navigate("/inventory");
+        })
+        .catch((err) => {
+          alert(err);
+        });
     } else {
       signup(data);
       console.log("signup");
@@ -101,7 +104,7 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
             </Label>
             <Label htmlFor="password">
               <span>password</span>
-              <Input id="password" {...register("password")} />
+              <Input id="password" type="password" {...register("password")} />
             </Label>
 
             <Button>{frame.title}</Button>

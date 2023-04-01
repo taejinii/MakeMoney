@@ -15,14 +15,20 @@ export default function DashboardPage() {
   const [data, setData] = useState([]);
   const [prevData, setPrevData] = useState([]);
   const [month, setMonth] = useState(getCurMonth(new Date()));
+  const userId = localStorage.getItem("USER_ID");
   const year = getYear(new Date());
   const prevMonth = getPrevMonth(Number(month));
+  // const getData = async () => {
+  //   const { data } = await customAxios.get(
+  //     `/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31&userId=${userId}`
+  //   );
+  //   setData(data);
+  // };
   const getData = async () => {
-    const { data } = await customAxios.get(
-      `/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31`
-    );
+    const { data } = await customAxios.get(`/items?userId=${userId}`);
     setData(data);
   };
+  console.log(data);
   const getPrevData = async () => {
     const { data } = await customAxios.get(
       `/items?buyDate_gte=${year}-${prevMonth}-01&buyDate_lte=${year}-${prevMonth}-31`
