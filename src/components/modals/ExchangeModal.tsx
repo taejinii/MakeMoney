@@ -49,6 +49,7 @@ export default function ExchangeModal() {
       const response = await axios.get(
         process.env.REACT_APP_CURRENCY + `${currencyName[i]}`
       );
+      console.log(response);
       currencyArr.push(response.data[0]);
     }
     return setCurrency(currencyArr);

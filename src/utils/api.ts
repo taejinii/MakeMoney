@@ -1,8 +1,8 @@
 import customAxios from "./axios";
 
-const userId = Number(localStorage.getItem("USER_ID"));
 export const getItem = async () => {
   try {
+    const userId = Number(localStorage.getItem("USER_ID"));
     const response = await customAxios.get(`/items?userId=${userId}`);
     return response.data;
   } catch (err) {
@@ -19,6 +19,8 @@ export const deleteItem = (id: number) => {
 
 export const addItem = async (data: any) => {
   try {
+    const userId = Number(localStorage.getItem("USER_ID"));
+
     return await customAxios.post("/items", { ...data, userId });
   } catch (err) {
     console.log(err);
@@ -38,7 +40,8 @@ export const login = async (data: UserType) => {
       console.log(res);
     });
   } catch (err) {
-    console.log(err);
+    console.error("로그인실패", err);
+    throw new Error("로그인에 실패 하였습니다.");
   }
 };
 export const signup = async (data: UserType) => {
@@ -46,5 +49,6 @@ export const signup = async (data: UserType) => {
     return await customAxios.post("/register", data);
   } catch (err) {
     console.log(err);
+    return err;
   }
 };
