@@ -19,7 +19,7 @@ export default function InventoryHeader({ data = [] }) {
     { label: "판매가격", key: "sellPrice" },
     { label: "순이익", key: "productName" },
   ];
-  console.log(data); // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
+  // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
   return (
     <header>
       <div className="flex justify-between items-center w-full mb-2 ">

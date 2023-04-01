@@ -3,8 +3,7 @@ import Button from "../common/Button";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import customAxios from "../../utils/axios";
-import axios from "axios";
+import { login, signup } from "../../utils/api";
 interface UserTypes {
   isUser: boolean;
   frame: {
@@ -59,20 +58,11 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
   } = useForm();
   const onSubmit = (data) => {
     if (isUser) {
-      axios
-        .post("https://salty-yielding-harpymimus.glitch.me/login", data)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-      console.log("login");
+      login(data);
     } else {
-      axios
-        .post("https://salty-yielding-harpymimus.glitch.me/register", data)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      signup(data);
       console.log("signup");
     }
-
-    // console.log(data);
   };
   return (
     <Container>

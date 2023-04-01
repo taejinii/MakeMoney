@@ -59,6 +59,7 @@ export default function InventoryPage() {
     queryKey: ["items"],
     queryFn: getItem,
   });
+  console.log(data);
   return (
     <>
       <Container className="dark:bg-[#363a44] dark:text-white">
