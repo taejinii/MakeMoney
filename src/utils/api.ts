@@ -36,8 +36,6 @@ export const login = async (data: UserType) => {
   try {
     return await customAxios.post("/login", data).then((res) => {
       localStorage.setItem("USER_ID", res.data.user.id);
-      localStorage.setItem("USER_NAME", res.data.user.name);
-      console.log(res);
     });
   } catch (err) {
     console.error("로그인실패", err);
@@ -50,5 +48,15 @@ export const signup = async (data: UserType) => {
   } catch (err) {
     console.log(err);
     return err;
+  }
+};
+
+/**유저 정보 api */
+export const getUserInfo = async (userId: number) => {
+  try {
+    const response = await customAxios.get(`/users/${userId}`);
+    return response.data;
+  } catch (err) {
+    console.error(err);
   }
 };
