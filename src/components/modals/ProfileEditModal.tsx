@@ -4,7 +4,6 @@ import { useAppSelector, useAppDispatch } from "../../store/store";
 import { closeModal } from "../../store/modalSlice";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserInfo } from "../../utils/api";
-
 import Button from "../common/Button";
 import defaultProfileImage from "../../defaultProfileImage.png";
 import useModalClose from "../../hooks/useModalClose";
@@ -44,8 +43,12 @@ export default function ProfileEditModal() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["userInfo"]);
-        addToast({ type: "success", text: "Profile modified successfully" });
-        // dispatch(closeModal());
+        addToast({
+          type: "success",
+          title: "Success!",
+          text: "Your profile has been successfully modified.",
+        });
+        dispatch(closeModal());
       },
     }
   );

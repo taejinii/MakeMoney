@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { login, signup } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
-import { loginAction } from "../../store/loginSlice";
 
 interface UserTypes {
   isUser: boolean;
@@ -42,7 +41,6 @@ const RightSection = styled.div`
     width: 100%;
     height: 100%;
   }
-  /* height: 500px; */
 `;
 const Input = styled.input`
   padding: 10px;
@@ -72,8 +70,13 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
           alert(err);
         });
     } else {
-      signup(data);
-      console.log("signup");
+      signup(data)
+        .then(() => {
+          navigate("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   return (
