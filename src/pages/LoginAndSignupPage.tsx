@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import Toast from "../components/common/Toast";
 import LoginAndSignup from "../components/LoginAndSignup/LoginAndSignup";
 
 const LOGIN_FRAME = {
@@ -27,6 +28,7 @@ export default function LoginAndSignupPage() {
   }, [pathname, userHandler]);
   return (
     <>
+      <Toast />
       <LoginAndSignup
         isUser={isUser}
         frame={isUser ? LOGIN_FRAME : SIGNUP_FRAME}
