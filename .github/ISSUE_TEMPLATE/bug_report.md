@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 **To-do**
 Steps to reproduce the behavior:
--[ ] todo
+- [ ] todo
 
 
 **Screenshots**
