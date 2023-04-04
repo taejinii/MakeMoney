@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { getItem } from "../utils/api";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
-import customAxios from "../utils/axios";
 
-interface SoldoutTypes {
-  check: boolean;
-  id: number;
-}
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,34 +17,7 @@ export const Container = styled.div`
 `;
 
 export default function InventoryPage() {
-  const [isSoldOut, setIsSoldOut] = useState(false);
-  const queryClient = useQueryClient();
-  const { mutate: deleteItem } = useMutation(
-    (id: number) => {
-      return customAxios.delete(`/items/${id}`);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["items"]);
-      },
-    }
-  );
-  const { mutate: checkSoldout } = useMutation(
-    async ({ check, id }: SoldoutTypes) => {
-      console.log(id);
-      return await customAxios.patch(`items/${id}`, {
-        isSoldOut: check,
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["items"]);
-        setIsSoldOut(!isSoldOut);
-      },
-    }
-  );
-
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["items"],
     queryFn: getItem,
   });
@@ -58,11 +26,7 @@ export default function InventoryPage() {
     <>
       <Container className="dark:bg-[#363a44] dark:text-white">
         <InventoryHeader data={data} />
-        <InventoryTable
-          // items={data}
-          deleteItem={deleteItem}
-          handleCheck={checkSoldout}
-        />
+        <InventoryTable isLoading={isLoading} items={data} />
       </Container>
     </>
   );

@@ -9,24 +9,54 @@ export const getItem = async () => {
     console.log(err);
   }
 };
-export const deleteItem = (id: number) => {
+/**아이템 삭제 요청 api 함수 */
+export const deleteItem = async (id: number) => {
   try {
-    return customAxios.delete(`/items/${id}`);
+    return await customAxios.delete(`/items/${id}`);
   } catch (err) {
     console.log(err);
   }
 };
 
-export const addItem = async (data: any) => {
+/**아이템 수정 요청 api 함수 */
+export const updateItem = async (id: number | undefined, data: any) => {
+  try {
+    return await customAxios.patch(`/items/${id}`, data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**인벤토리 아이템 저장 api 요청 함수 */
+export interface IFormInput {
+  buyDate: string | Date;
+  buyPlace: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  size: string | number;
+  shipExpense: number;
+  sellPrice: number;
+}
+export const addItem = async (data: IFormInput) => {
   try {
     const userId = Number(localStorage.getItem("USER_ID"));
-
     return await customAxios.post("/items", { ...data, userId });
   } catch (err) {
     console.log(err);
   }
 };
 
+/**판매여부 체크api 함수*/
+export const checkSoldout = async (check: boolean, id: number) => {
+  try {
+    return await customAxios.patch(`/items/${id}`, { isSoldOut: check });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**회원가입 및 로그인 함수 */
 interface UserType {
   email: string;
   password: string;

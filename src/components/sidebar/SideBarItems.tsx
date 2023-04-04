@@ -22,12 +22,12 @@ export default function SideBarItems() {
         </div>
         <div>Inventory</div>
       </Link>
-      <Link to={"stockx"} className="sidebar-btn">
+      {/* <Link to={"stockx"} className="sidebar-btn">
         <div className="mr-1">
           <RiStockFill />
         </div>
         <div>Stockx</div>
-      </Link>
+      </Link> */}
       <button
         className="sidebar-btn"
         onClick={() => dispatch(openModal({ modalType: "ExchangeModal" }))}

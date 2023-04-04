@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { login, signup } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../store/store";
+import useToast from "../../hooks/useToast";
 
 interface UserTypes {
   isUser: boolean;
@@ -54,7 +54,7 @@ const Label = styled.label`
 `;
 export default function LoginAndSignup({ isUser, frame }: UserTypes) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { addToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -67,16 +67,31 @@ export default function LoginAndSignup({ isUser, frame }: UserTypes) {
           navigate("/inventory");
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
+          addToast({
+            type: "error",
+            title: "Something went wrong!",
+            text: "Invaild Email or Password",
+          });
         });
     } else {
-      signup(data)
-        .then(() => {
+      signup(data).then((res) => {
+        console.log(res.response.data);
+        if (res.status === 201) {
+          addToast({
+            type: "success",
+            title: "Success!",
+            text: "Congratulations on your membership!",
+          });
           navigate("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        } else {
+          addToast({
+            type: "error",
+            title: "Something went wrong!",
+            text: res.response.data,
+          });
+        }
+      });
     }
   };
   return (

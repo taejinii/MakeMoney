@@ -2,10 +2,9 @@ import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
 import { CSVLink } from "react-csv";
 import { logoutAction } from "../../store/loginSlice";
-
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import Button from "../common/Button";
-import { useNavigate } from "react-router-dom";
 export default function InventoryHeader({ data = [] }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -68,7 +67,6 @@ export default function InventoryHeader({ data = [] }) {
               CSV Download
             </CSVLink>
           </Button>
-          {/* <Button>CSV Import</Button> */}
           <Button onClick={logoutHandler}>{userId ? "Logout" : "Login"}</Button>
         </div>
       </div>

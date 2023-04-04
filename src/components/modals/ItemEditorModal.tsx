@@ -1,27 +1,17 @@
 import styled from "styled-components";
 import customAxios from "../../utils/axios";
 import useModalClose from "../../hooks/useModalClose";
+import useToast from "../../hooks/useToast";
 import Button from "../common/Button";
 import { closeModal } from "../../store/modalSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";
-import useToast from "../../hooks/useToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addItem } from "../../utils/api";
+import { addItem, updateItem, IFormInput } from "../../utils/api";
+
 interface VisibleType {
   visible: boolean;
-}
-
-interface IFormInput {
-  buyDate: string | Date;
-  buyPlace: string;
-  productName: string;
-  quantity: number;
-  price: number;
-  size: string | number;
-  shipExpense: number;
-  sellPrice: number;
 }
 
 export const ModalBackDrop = styled.div`
@@ -58,11 +48,13 @@ export const ModalContainer = styled.div<VisibleType>`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
+/**모달컴포넌트를 오픈할때 디스패치액션에 isEdit값을 같이 보내주어 유저가 수정을원하는지 아이템추가를 원하는지 구분해주었다. */
 export default function ItemEditorModal() {
   const { isOpen, isEdit } = useAppSelector((state) => state.modal);
   const { addToast } = useToast();
   const dispatch = useAppDispatch();
   const ref = useModalClose(isOpen);
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -70,11 +62,13 @@ export default function ItemEditorModal() {
     formState: { errors },
   } = useForm<IFormInput>();
 
+  /**기존아이템수정시 기존데이터를 불러오는함수 */
   const getOriginData = useCallback(async () => {
     const result = await customAxios.get(`/items/${isEdit?.itemId}`);
     reset(result.data);
   }, [isEdit?.itemId, reset]);
 
+  /**isEdit 이 아닌경우라면 아이템 추가를 원하는것이니 인풋값 초기화 만약 isEdit이 있다면 기존아이템정보 수정을 원하는것이니 기존아이템정보를 불러온다. */
   useEffect(() => {
     if (isEdit?.itemId === 0 || isEdit?.itemId === undefined || !isEdit) {
       reset({
@@ -92,9 +86,9 @@ export default function ItemEditorModal() {
       getOriginData();
     }
   }, [getOriginData, isEdit, isEdit?.itemId, reset]);
-  const queryClient = useQueryClient();
+
   const add = useMutation(
-    (data) => {
+    (data: IFormInput) => {
       return addItem(data);
     },
     {
@@ -107,13 +101,17 @@ export default function ItemEditorModal() {
         queryClient.invalidateQueries(["items"]);
       },
       onError: () => {
-        addToast({ type: "error", text: "An unexpected error occurred." });
+        addToast({
+          type: "error",
+          title: "Something went wrong",
+          text: "An unexpected error occurred.",
+        });
       },
     }
   );
   const update = useMutation(
     (data) => {
-      return customAxios.patch(`items/${isEdit?.itemId}`, data);
+      return updateItem(isEdit?.itemId, data);
     },
     {
       onSuccess: () => {
@@ -123,6 +121,13 @@ export default function ItemEditorModal() {
           text: "The item has been modified successfully.",
         });
         queryClient.invalidateQueries(["items"]);
+      },
+      onError: () => {
+        addToast({
+          type: "error",
+          title: "Something went wrong",
+          text: "An unexpected error occurred.",
+        });
       },
     }
   );
