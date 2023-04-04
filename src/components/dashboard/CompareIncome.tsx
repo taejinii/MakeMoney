@@ -13,6 +13,7 @@ export default function CompareIncome({ data, month, prevData }: any) {
     useCalculate(prevData, "price") * usdRate +
     useCalculate(prevData, "shipExpense");
 
+  /**밑에 두개의 변수는 전달대비 이번달 매출증가율 및 비용증가율 계산값을 할당한 변수 */
   const salesRate = Math.round(((sales - prevSales) / prevSales) * 100);
   const spendingRate = Math.round(
     ((spending - prevSpending) / prevSpending) * 100
