@@ -99,11 +99,15 @@ export default function ItemEditorModal() {
     },
     {
       onSuccess: () => {
-        addToast({ type: "success", text: "Successfully saved!" });
+        addToast({
+          type: "success",
+          title: "Success!",
+          text: "The item has been added successfully.",
+        });
         queryClient.invalidateQueries(["items"]);
       },
       onError: () => {
-        addToast({ type: "error", text: "An unexpected error occured" });
+        addToast({ type: "error", text: "An unexpected error occurred." });
       },
     }
   );
@@ -113,7 +117,11 @@ export default function ItemEditorModal() {
     },
     {
       onSuccess: () => {
-        addToast({ type: "success", text: "Successfully edited!" });
+        addToast({
+          type: "success",
+          title: "Success!",
+          text: "The item has been modified successfully.",
+        });
         queryClient.invalidateQueries(["items"]);
       },
     }
