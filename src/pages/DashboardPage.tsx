@@ -33,7 +33,7 @@ export default function DashboardPage() {
     getData();
     getPrevData();
   }, [month]);
-
+  // 여기는 리액트쿼리를 사용했는데 그데이터를 다시 State저장? 이럴필요가잇을까 그리고 차트랑 캐러셀에 제대로 렌더링이안되는듯 수정필요
   const selectList: selectTypes[] = [
     { id: 1, month: "01" },
     { id: 2, month: "02" },

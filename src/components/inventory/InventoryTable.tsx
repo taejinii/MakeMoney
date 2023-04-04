@@ -3,7 +3,7 @@ import { openModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store/store";
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
-import { getItem } from "../../utils/api";
+import { getItem, getUserInfo } from "../../utils/api";
 import styled from "styled-components";
 import LoadingSpinner from "../common/LoadingSpinner";
 import useUsdRate from "../../hooks/useUsdRate";
@@ -38,10 +38,18 @@ const HeadTr = styled.tr`
 export default function InventoryTable({ deleteItem, handleCheck }) {
   const dispatch = useAppDispatch();
   const usdRate = useUsdRate();
+  const userId = Number(localStorage.getItem("USER_ID"));
   const { data: items, isLoading } = useQuery({
     queryKey: ["items"],
     queryFn: getItem,
   });
+  const { data: userInfo } = useQuery(
+    ["userInfo", userId],
+    () => getUserInfo(userId),
+    {
+      enabled: !!userId,
+    }
+  );
   const tableHeader: string[] = [
     "판매여부",
     "구매일",
@@ -58,7 +66,6 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
     "순이익",
     "",
   ];
-  console.log(items);
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -163,7 +170,11 @@ export default function InventoryTable({ deleteItem, handleCheck }) {
             <video autoPlay muted loop>
               <source src="videos/Noitem.mp4" />
             </video>
-            <div className="font-semibold">NO item UserName!!</div>
+            <div className="font-semibold">
+              {userInfo?.name
+                ? userInfo?.name
+                : "Please Login first my friend!"}
+            </div>
             <div className="font-semibold">
               Click Add item Button to manage your items &#x1F31F;
             </div>
