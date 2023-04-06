@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
-
+import MobileMenuButton from "../components/common/MobileMenuButton";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,6 +25,7 @@ export default function InventoryPage() {
   return (
     <>
       <Container className="dark:bg-[#363a44] dark:text-white">
+        <MobileMenuButton />
         <InventoryHeader data={data} />
         <InventoryTable isLoading={isLoading} items={data} />
       </Container>

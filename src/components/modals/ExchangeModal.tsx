@@ -19,7 +19,7 @@ interface CurrencyTypes {
 interface Visible {
   visible: boolean;
 }
-const ModalWrapper = styled.div<Visible>`
+export const ModalWrapper = styled.div<Visible>`
   display: flex;
   position: fixed;
   flex-direction: column;
@@ -49,7 +49,6 @@ export default function ExchangeModal() {
       const response = await axios.get(
         process.env.REACT_APP_CURRENCY + `${currencyName[i]}`
       );
-      console.log(response);
       currencyArr.push(response.data[0]);
     }
     return setCurrency(currencyArr);
@@ -65,7 +64,6 @@ export default function ExchangeModal() {
   return (
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
-
       <ModalWrapper
         visible={isOpen}
         className="dark:bg-[#363a44] dark:text-white"

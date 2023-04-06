@@ -16,6 +16,7 @@ export default function LoginAndSignupPage() {
   const [isUser, setIsUser] = useState(false);
   const { pathname } = useLocation();
 
+  /**유저가 로그인을할지 회원가입을할지 구분해주는 함수 */
   const userHandler = useCallback(() => {
     if (pathname === "/signup") {
       setIsUser(false);

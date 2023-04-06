@@ -7,7 +7,6 @@ import "./index.css";
 import React from "react";
 import App from "./App";
 import store from "./store/store";
-import GlobalModals from "./components/modals/GlobalModals";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -21,7 +20,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
-      <GlobalModals />
       <App />
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>

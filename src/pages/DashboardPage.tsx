@@ -5,6 +5,7 @@ import customAxios from "../utils/axios";
 import CompareIncome from "../components/dashboard/CompareIncome";
 import SalesChart from "../components/dashboard/SalesChart";
 import MonthlyDetailCarousel from "../components/dashboard/MonthlyDetailCarousel";
+import MobileMenuButton from "../components/common/MobileMenuButton";
 
 interface selectTypes {
   id: number;
@@ -55,6 +56,7 @@ export default function DashboardPage() {
 
   return (
     <Container className="gap-5 dark:bg-[#363a44]">
+      <MobileMenuButton />
       <select
         onChange={onMonth}
         className="gap-5  w-40 rounded-xl shadow-xl border-2 border-black font-bold"

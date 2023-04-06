@@ -55,11 +55,7 @@ const Label = styled.label`
 export default function LoginAndSignup({ isUser, frame }: UserTypes) {
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     if (isUser) {
       login(data)

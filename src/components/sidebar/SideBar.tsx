@@ -9,6 +9,9 @@ const SideBarContainer = styled.aside`
   width: 150px;
   height: 100vh;
   background-color: #f8f9fa;
+  @media screen and (max-width: 1280px) {
+    display: none;
+  }
 `;
 const ProfileWrapper = styled.header`
   display: flex;
