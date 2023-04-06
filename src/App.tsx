@@ -5,9 +5,11 @@ import DashboardPage from "./pages/DashboardPage";
 import StockxPage from "./pages/StockxPage";
 import LoginAndSignupPage from "./pages/LoginAndSignupPage";
 import React from "react";
+import GlobalModals from "./components/modals/GlobalModals";
 function App() {
   return (
     <BrowserRouter>
+      <GlobalModals />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<DashboardPage />} />

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useAppDispatch } from "../../store/store";
 import { openModal } from "../../store/modalSlice";
-import { RiDropboxFill, RiStockFill } from "react-icons/ri";
+import { RiDropboxFill } from "react-icons/ri";
 import React from "react";
 import DarkMode from "./DarkMode";
 export default function SideBarItems() {
@@ -22,12 +22,6 @@ export default function SideBarItems() {
         </div>
         <div>Inventory</div>
       </Link>
-      {/* <Link to={"stockx"} className="sidebar-btn">
-        <div className="mr-1">
-          <RiStockFill />
-        </div>
-        <div>Stockx</div>
-      </Link> */}
       <button
         className="sidebar-btn"
         onClick={() => dispatch(openModal({ modalType: "ExchangeModal" }))}

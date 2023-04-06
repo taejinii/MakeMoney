@@ -17,6 +17,7 @@ const losinSlice = createSlice({
     },
     logoutAction: (state) => {
       state.isLogin = false;
+      window.location.reload();
       localStorage.clear();
     },
   },
