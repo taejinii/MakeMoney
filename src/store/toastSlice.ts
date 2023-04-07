@@ -1,6 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface ToastType {
+  type: "success" | "error";
+  title: string;
+  text: string;
+  id: string;
+}
+interface ToastState {
+  toasts: ToastType[];
+}
+const initialState: ToastState = {
   toasts: [],
 };
 
@@ -8,11 +16,11 @@ const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
-    addToast: (state: any, action: any) => {
+    addToast: (state, action: PayloadAction<ToastType>) => {
       state.toasts.push(action.payload);
     },
-    removeToast: (state: any, action) => {
-      state.toasts = state.toasts.filter((toast) => {
+    removeToast: (state, action: PayloadAction<string>) => {
+      state.toasts = state.toasts.filter((toast: ToastType) => {
         return toast.id !== action.payload;
       });
     },

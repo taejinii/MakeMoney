@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import useModalClose from "../../hooks/useModalClose";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
@@ -19,6 +19,24 @@ interface CurrencyTypes {
 interface Visible {
   visible: boolean;
 }
+const slideOut = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(380px);
+
+  }
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(380px);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
 export const ModalWrapper = styled.div<Visible>`
   display: flex;
   position: fixed;
@@ -29,12 +47,13 @@ export const ModalWrapper = styled.div<Visible>`
   z-index: 20;
   right: 0;
   gap: 20px;
+  background-color: white;
   transition: 0.3s;
+
   visibility: ${(props) => (props.visible ? "visible" : "hidden")};
   opacity: ${(props) => (props.visible ? "1" : "0")};
   transform: ${(props) =>
     props.visible ? "translateX(0px)" : "translateX(380px)"};
-  background-color: white;
 `;
 
 export default function ExchangeModal() {
@@ -61,9 +80,11 @@ export default function ExchangeModal() {
   const today = `${new Date().getFullYear()}/${
     new Date().getMonth() + 1
   }/${new Date().getDate()}`;
+
   return (
     <>
       {isOpen && <ModalBackDrop ref={ref} />}
+
       <ModalWrapper
         visible={isOpen}
         className="dark:bg-[#363a44] dark:text-white"
