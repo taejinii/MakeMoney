@@ -1,3 +1,8 @@
+import useModalClose from "../../hooks/useModalClose";
+import React from "react";
+import DarkMode from "../sidebar/DarkMode";
+import Button from "../common/Button";
+import defaultProfileImage from "../../defaultProfileImage.png";
 import { ModalWrapper } from "./ExchangeModal";
 import { ModalBackDrop } from "./ItemEditorModal";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -5,14 +10,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { closeModal, openModal } from "../../store/modalSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../../utils/api";
-import useModalClose from "../../hooks/useModalClose";
-import React from "react";
-import DarkMode from "../sidebar/DarkMode";
-import Button from "../common/Button";
-import defaultProfileImage from "../../defaultProfileImage.png";
-
 import { logoutAction } from "../../store/loginSlice";
-
+import {
+  FiLogIn,
+  FiLogOut,
+  FiBarChart,
+  FiUser,
+  FiShoppingBag,
+} from "react-icons/fi";
 interface UserType {
   name: string;
   profileImage: string;
@@ -63,20 +68,24 @@ export default function MobileMenuModal() {
           </div>
         </header>
         <section className="flex flex-col justify-center items-center gap-5 ">
-          <Link to={"/inventory"} className="mobile-item">
+          <Link to={"/inventory"} className="mobile-item ">
+            <FiShoppingBag size={25} />
             Inventory
           </Link>
           <Link className="mobile-item" to={"/"}>
+            <FiUser size={25} />
             Dashboard
           </Link>
           <button
             className="mobile-item"
             onClick={() => dispatch(openModal({ modalType: "ExchangeModal" }))}
           >
-            Exchange
+            <FiBarChart size={25} />
+            <span className="">Exchange </span>
           </button>
           <button className="mobile-item" onClick={isLoginHandler}>
-            {userId ? "Logout" : "Login"}
+            {userId ? <FiLogOut size={25} /> : <FiLogIn size={25} />}
+            <span className="">{userId ? "Logout" : "Login"}</span>
           </button>
           <DarkMode />
         </section>
