@@ -5,6 +5,7 @@ import styled from "styled-components";
 import InventoryHeader from "../components/inventory/InventoryHeader";
 import InventoryTable from "../components/inventory/InventoryTable";
 import MobileMenuButton from "../components/common/MobileMenuButton";
+import ExchangeModal from "../components/modals/ExchangeModal";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;

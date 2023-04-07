@@ -29,6 +29,6 @@ code {
     @apply text-xs text-red-600 font-semibold;
   }
   .mobile-item {
-    @apply w-full text-center p-4 rounded-xl shadow-xl hover:scale-105 transition-all  bg-[#f0efef] dark:bg-[#272b34];
+    @apply flex justify-center items-center w-full text-center p-4 rounded-xl shadow-xl hover:scale-105 transition-all  bg-[#f0efef] dark:bg-[#272b34];
   }
 }
