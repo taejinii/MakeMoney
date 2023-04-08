@@ -18,6 +18,10 @@ export interface ItemTypes {
   shipExpense: number;
   size: string;
   price: number;
+  profit: number;
+  duty: number;
+  krwPrice: number;
+  totalPrice: number;
 }
 
 const BodyTr = styled.tr`
@@ -113,11 +117,6 @@ export default function InventoryTable({ items, isLoading }) {
           </thead>
           <tbody>
             {items.map((item: ItemTypes) => {
-              const krwPrice =
-                item.quantity * (item.price * Math.round(usdRate));
-              const duty = krwPrice * 0.25;
-              const totalPrice = krwPrice + duty + item.shipExpense;
-              const netProfit = item.sellPrice - totalPrice;
               return (
                 <BodyTr
                   className="dark:hover:bg-white dark:hover:bg-opacity-20"
@@ -153,20 +152,20 @@ export default function InventoryTable({ items, isLoading }) {
                   <td>{item.size}</td>
                   <td>{item.quantity}</td>
                   <td>${item.price}</td>
-                  <td>{krwPrice.toLocaleString()}</td>
+                  <td>{item.krwPrice.toLocaleString()}</td>
                   <td>{item.shipExpense}</td>
-                  <td>{duty.toLocaleString()}</td>
+                  <td>{item.duty.toLocaleString()}</td>
                   <td className="text-red-600">
-                    -{totalPrice.toLocaleString()}
+                    -{item.totalPrice.toLocaleString()}
                   </td>
                   <td>{item.sellPrice.toLocaleString()}</td>
 
                   <td
                     className={
-                      netProfit > 0 ? "text-green-600" : "text-red-600"
+                      item.profit > 0 ? "text-green-600" : "text-red-600"
                     }
                   >
-                    {netProfit.toLocaleString()}
+                    {item.profit.toLocaleString()}
                   </td>
 
                   <td>

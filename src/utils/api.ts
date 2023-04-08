@@ -3,11 +3,10 @@ import customAxios from "./axios";
 export const getItem = async (year, month) => {
   try {
     const userId = Number(localStorage.getItem("USER_ID"));
-    const response = await customAxios.get(
+    const { data } = await customAxios.get(
       `/items?buyDate_gte=${year}-${month}-01&buyDate_lte=${year}-${month}-31&userId=${userId}`
     );
-    console.log(response.data);
-    return response.data;
+    return data;
   } catch (err) {
     console.log(err);
   }

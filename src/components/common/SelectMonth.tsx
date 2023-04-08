@@ -28,7 +28,7 @@ export const SelectMonth = ({ updateMonth }: SetStateType) => {
   return (
     <select
       onChange={monthHandler}
-      className="gap-5  w-36 rounded-xl shadow-xl border-2 border-black font-bold dark:text-black"
+      className="gap-5 md:w-36 md:mb-0 mb-3 rounded-md p-[4px] shadow-xl border-2 border-black font-bold dark:text-black"
     >
       <option value="" selected disabled hidden>
         Choose Month
