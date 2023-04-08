@@ -196,7 +196,7 @@ export default function InventoryTable({ items, isLoading }) {
         <div className="flex border-4 shadow-lg rounded-xl w-full h-full">
           <div className="m-auto w-80 h-80 ">
             <video autoPlay muted loop>
-              <source src="videos/Noitem.mp4" />
+              <source src="videos/Noitem.mp4" type="video/mp4" />
             </video>
             <div className="font-semibold">
               {userInfo?.name
