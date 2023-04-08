@@ -5,10 +5,11 @@ import { logoutAction } from "../../store/loginSlice";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import Button from "../common/Button";
-export default function InventoryHeader({ data = [] }) {
+export default function InventoryHeader({ data = [], month }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const userId = localStorage.getItem("USER_ID");
+
   const headers = [
     { label: "구매일", key: "buyDate" },
     { label: "구매처", key: "buyPlace" },
@@ -16,12 +17,13 @@ export default function InventoryHeader({ data = [] }) {
     { label: "사이즈", key: "size" },
     { label: "수량", key: "quantity" },
     { label: "구매가($USD)", key: "price" },
-    { label: "원화가격", key: "productName" },
+    { label: "원화가격", key: "krwPrice" },
     { label: "배대지 비용", key: "shipExpense" },
-    { label: "관부가세", key: "productName" },
-    { label: "총 구입가격", key: "productName" },
+    { label: "관부가세", key: "duty" },
+    { label: "총 구입가격", key: "totalPrice" },
+    { label: "판매여부", key: "isSoldOut" },
     { label: "판매가격", key: "sellPrice" },
-    { label: "순이익", key: "productName" },
+    { label: "순이익", key: "profit" },
   ];
   // 총구입가격 순이익 원화가격 등등 계싼해서 새로운 객체배열을 만들어서 써야한다.
   const logoutHandler = () => {
@@ -61,7 +63,7 @@ export default function InventoryHeader({ data = [] }) {
             <CSVLink
               headers={headers}
               data={data}
-              filename={`${new Date().getFullYear()} data`}
+              filename={`${new Date().getFullYear()}년 ${month}월 data`}
               onClick={fileDownloadHandler}
             >
               CSV Download

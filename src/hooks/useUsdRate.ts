@@ -9,5 +9,5 @@ export default function useUsdRate() {
   useEffect(() => {
     getUsdRate();
   }, []);
-  return usdRate;
+  return Math.round(usdRate);
 }
