@@ -21,3 +21,13 @@ export const getPrevMonth = (month: number) => {
   }
   return prevMonth;
 };
+
+export const getDateTest = (date: Date) => {
+  let month2: number | string = date.getMonth() + 1;
+  let year2 = date.getFullYear();
+  if (month2 < 10) {
+    month2 = `0${month2}`;
+  }
+
+  return { year2, month2 };
+};
